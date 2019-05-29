@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Customer Management</h5>
+        </div>
+    </div>
+    <!-- /Title -->
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">all customers</h6>
+                    </div>
+                    <div class="pull-right">
+                        <a href="/app/customer/new" class="pull-left btn btn-success btn-xs mr-15">Add New</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <!--<div class="form-group mb-0">-->
+                        <!--<div class="input-group mb-15"> <span class="input-group-btn">-->
+                        <!--<button type="button" class="btn  btn-success"><i class="fa fa-search"></i></button>-->
+                        <!--</span>-->
+                        <!--<input type="text" id="example-input1-group4" name="example-input1-group4" class="form-control" placeholder="Search">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--<hr class="light-grey-hr"/>-->
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table id="admin" class="table table-hover display  pb-30" >
+                                    <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Display Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Date Created</th>
+                                        <th>Status</th>
+                                        <th>Action(s)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Display Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Date Created</th>
+                                        <th>Status</th>
+                                        <th>Action(s)</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+
+
+</div>
+<th:block layout:fragment="scripts">
+
+    <!-- Page-Level Scripts -->
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function() {
+            var table = $('#admin').DataTable({
+                select:false,
+                responsive: true,
+                "lengthMenu" : [ [ 10, 20, 30, -1],	[ 10, 20, 30, "All" ] ],
+                "pagingType" : "simple_numbers",
+                "searching": false,
+                "paging": true,
+                "processing" : true,
+                "serverSide" : true,
+                "ajax": "/app/customer/all",
+                "dom": 'T<"clear">frtlp',
+                "rowId": "id",
+                "columns": [
+                    { "data": "firstName" },
+                    { "data": "lastName" },
+                    { "data": "displayName" },
+                    { "data": "phoneNumber" },
+                    { "data": "email" },
+                    { "data": "dateCreated" },
+                    { "data": "active"},
+                    { "data": "id"}
+                ],
+                "columnDefs": [{
+                    "targets" : 5,
+                    "data" : "dateCreated",
+                    "render" : function(data, type,full, meta) {
+                        if (type === 'display') {
+                            if(data == null)
+                                return data;
+                            var dtStart = new Date(parseInt(data));
+                            var dtStartWrapper = moment(dtStart);
+                            return dtStartWrapper.format('LLLL');
+                        }
+                        return data;
+                    }
+                },{
+                    "targets": 6,
+                    "data": "active",
+                    "render": function (data, type, full, meta) {
+                        if (type === 'display') {
+                            if (data == true) {
+                                return "<span class='label label-success'>active</span>";
+                            } else {
+                                return "<span class='label label-danger'>inactive</span>";
+                            }
+                        }
+                        return data;
+                    }
+                },
+                    {
+                        "targets": 7,
+                        "data": "id",
+                        "render": function (data, type, full, meta) {
+                            if (type === 'display') {
+                                return "<a href='/app/customer/" + data + "/detail' class='mr-25' data-toggle='tooltip' data-original-title='View Deatials'> <i class='fa fa-eye text-inverse m-r-10'></i> </a>";
+
+                                // if (full.active == true) {
+                                //     return "<a href='/app/customer/" + data + "/edit' class='mr-25' data-toggle='tooltip' data-original-title='Edit'> <i class='fa fa-pencil text-inverse m-r-10'></i> </a>" +
+                                //         "<a href='/app/customer/" + data + "/authority' class='mr-25' data-toggle='tooltip' data-original-title='Manage Authority'> <i class='fa fa-key text-inverse m-r-10'></i> </a>" +
+                                //         "<a href='/app/customer/" + data + "/disable' class='mr-25' style='color:red;' data-toggle='tooltip' data-original-title='Change Activation Status'> <i class='fa fa-ban text-inverse m-r-10'></i> </a>";
+                                //
+                                // }else {
+                                //     return "<a href='/app/customer/" + data + "/edit' class='mr-25' data-toggle='tooltip' data-original-title='Edit'> <i class='fa fa-pencil text-inverse m-r-10'></i> </a>" +
+                                //         "<a href='/app/customer/" + data + "/authority' class='mr-25' data-toggle='tooltip' data-original-title='Manage Authority'> <i class='fa fa-key text-inverse m-r-10'></i> </a>" +
+                                //         "<a href='/app/customer/" + data + "/status' class='mr-25' style='color:green;' data-toggle='tooltip' data-original-title='Change Activation Status'> <i class='fa fa-check-circle text-inverse m-r-10'></i> </a>";
+                                // }
+                            }
+                            return data;
+                        }}
+                ]
+            });
+
+        });
+
+        /*]]>*/
+    </script>
+</th:block>
+
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+.just-padding {
+  padding: 15px;
+  border: 0px !important;
+}
+
+.list-group.list-group-root {
+  padding: 0;
+  overflow: hidden;
+}
+
+.list-group.list-group-root .list-group {
+  margin-bottom: 0;
+}
+
+.list-group.list-group-root .list-group-item {
+  border-radius: 0;
+  border-width: 1px 0 0 0;
+}
+
+.list-group.list-group-root > .list-group-item:first-child {
+  border-top-width: 0;
+}
+
+.list-group.list-group-root > .list-group > .list-group-item {
+  padding-left: 30px;
+}
+
+.list-group.list-group-root > .list-group > .list-group > .list-group-item {
+  padding-left: 45px;
+}
+
+.list-group-item .glyphicon {
+  margin-right: 5px;
+}
+.list-group-item {
+  background-color: #3a3633 !important;
+  color: #fffff0 !important;
+  border: 0px !important;
+}
+
+.list-group {
+  border: 0px !important;
+}
+
+.list-group-root {
+  border: 0px !important;
+}
+.well {
+  border: 0px !important;
+}
+.panelTitle {
+  padding: 10px;
+}
+
+/*a .list-group-item {*/
+  /*color: #ffffff;*/
+/*}*/
+.loading-modal {
+  display:    none;
+  position:   fixed;
+  z-index:    1000;
+  top:        0;
+  left:       0;
+  height:     100%;
+  width:      100%;
+  background: rgba( 255, 255, 255, .8 )
+  url('../img/FhHRx.gif')
+  50% 50%
+  no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading .loading-modal {
+  overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .loading-modal {
+  display: block;
+}
+
+
+.table-div {
+  background-color: #ffffff !important;
+  /* text-align: center; */
+  text-align: center;
+  height: 200px;
+  display: table-cell;
+  vertical-align: middle;
+  width: inherit;
+  font-size: 40px;
+  white-space: nowrap;
+}
+
+.loading-modal {
+  display:    none;
+  position:   fixed;
+  z-index:    1000;
+  top:        0;
+  left:       0;
+  height:     100%;
+  width:      100%;
+  background: rgba( 255, 255, 255, .8 )
+  url('../img/FhHRx.gif')
+  50% 50%
+  no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading .loading-modal {
+  overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .loading-modal {
+  display: block;
+}

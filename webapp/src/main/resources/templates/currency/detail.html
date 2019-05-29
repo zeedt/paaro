@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Currency Management</h5>
+        </div>
+    </div>
+    <!-- /Title -->
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">currency details</h6>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <!--<div class="form-group mb-0">-->
+                        <!--<div class="input-group mb-15"> <span class="input-group-btn">-->
+                        <!--<button type="button" class="btn  btn-success"><i class="fa fa-search"></i></button>-->
+                        <!--</span>-->
+                        <!--<input type="text" id="example-input1-group4" name="example-input1-group4" class="form-control" placeholder="Search">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--<hr class="light-grey-hr"/>-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-wrap">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-body">
+                                            <h6 class="txt-dark capitalize-font">Basic Info</h6>
+                                            <hr class="light-grey-hr">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Currency Code:</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static" th:text="${currency.type}">
+                                                                John </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Currency
+                                                            Description:</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"
+                                                               th:text="${currency.description}"> Doe </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+                                            <!-- /Row -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Currency Disabled?</label>
+                                                        <div class="col-md-9">
+                                                            <p class="form-control-static"
+                                                               th:text="${currency.disabled}"> Male </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="seprator-block"></div>
+                                            <h6 class="txt-dark capitalize-font">Bank Accounts</h6>
+                                            <hr class="light-grey-hr">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table id="currbank" class="table table-hover">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Bank Name</th>
+                                                                <th>Account Name</th>
+                                                                <th>Account Number</th>
+                                                                <th>Currency</th>
+                                                                <th>Status</th>
+                                                                <th>Action(s)</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr th:each="acc : ${bankAccounts}">
+                                                                <td th:text="${acc.bankName}"></td>
+                                                                <td th:text="${acc.accountName}"></td>
+                                                                <td th:text="${acc.accountNumber}"></td>
+                                                                <td th:text="${acc.currency.type}"></td>
+                                                                <td><i th:if="${acc.active == false}"
+                                                                       class='fa fa-ban  dt-body-center'
+                                                                       style='color:red;display:block; text-align:center; margin:0 auto;'></i>
+                                                                    <i th:if="${acc.active == true}"
+                                                                       class='fa fa-check dt-body-center'
+                                                                       data-toggle='tooltip'
+                                                                       style='color:green;display:block; text-align:center; margin:0 auto;'></i>
+                                                                </td>
+                                                                <td>
+                                                                    <a th:href='@{/app/account/{type}/edit(type=${acc.id})}'
+                                                                       class="mr-25" data-toggle="tooltip"
+                                                                       data-original-title="Edit"> <i
+                                                                            class="fa fa-pencil text-inverse m-r-10"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                            <tr>
+                                                                <th>Bank Account</th>
+                                                                <th>Account Name</th>
+                                                                <th>Account Number</th>
+                                                                <th>Currency</th>
+                                                                <th>Status</th>
+                                                                <th>Action(s)</th>
+                                                            </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="seprator-block"></div>
+
+                                            <div th:if="${currencyDetail} != null">
+                                                <h6 class="txt-dark capitalize-font">Advanced info</h6>
+                                                <hr class="light-grey-hr">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Buying Rate :</label>
+                                                            <div class="col-md-9">
+                                                                <p class="form-control-static"
+                                                                   th:text="${currencyDetail.buyingRate}"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Selling Rate :</label>
+                                                            <div class="col-md-9">
+                                                                <p class="form-control-static"
+                                                                   th:text="${currencyDetail.sellingRate}">
+                                                                    USA </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Calculate Charge in
+                                                                Naira:</label>
+                                                            <div class="col-md-9">
+                                                                <p class="form-control-static"
+                                                                   th:text="${currencyDetail.calculateChargeInNaira}"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Transfer fee per
+                                                                Currency in Naira:</label>
+                                                            <div class="col-md-9">
+                                                                <p class="form-control-static"
+                                                                   th:text="${currencyDetail.transactionFeePerInternationalCurrencyInNaira}">
+                                                                    USA </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Flat Charge
+                                                                Rate:</label>
+                                                            <div class="col-md-9">
+                                                                <p class="form-control-static"
+                                                                   th:text="${currencyDetail.flatChargeRate}"> Los
+                                                                    Angeles </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--/span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Percentage Charge
+                                                                Rate:</label>
+                                                            <div class="col-md-9">
+                                                                <p class="form-control-static"
+                                                                   th:text="${currencyDetail.percentageChargeRate}">
+                                                                    California</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--/span-->
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Is Flat Charge Enabled
+                                                                ? </label>
+                                                            <div class="col-md-9">
+                                                                <p class="form-control-static"
+                                                                   th:text="${currencyDetail.flatChargeEnabled}">
+                                                                    457890 </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Service Charge
+                                                                Cap:</label>
+                                                            <div class="col-md-9">
+                                                                <p class="form-control-static"
+                                                                   th:text="${currencyDetail.serviceChargeCap}"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- /Row -->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Amount Search
+                                                                Deviation for
+                                                                transaction Matching (+/-) : </label>
+                                                            <div class="col-md-9">
+                                                                <p class="form-control-static"
+                                                                   th:text="${currencyDetail.amountSearchDeviation}">
+                                                                    457890 </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--/span-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">Rate Search Deviation
+                                                                for
+                                                                transaction Matching (+/-) : </label>
+                                                            <div class="col-md-9">
+                                                                <p class="form-control-static"
+                                                                   th:text="${currencyDetail.rateSearchDeviation}">
+                                                                    457890 </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--/span-->
+                                                </div>
+                                            </div>
+                                            <div class="form-actions mt-10">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-offset-3 col-md-9">
+                                                                <a th:href='@{/app/currency/{type}/edit(type=${currency.type})}'
+                                                                   class="btn btn-info btn-icon left-icon  mr-10">
+                                                                    <i class="zmdi zmdi-edit"></i> <span>Edit</span>
+                                                                </a>
+                                                                <a href="/app/currency" class="btn btn-default">Cancel
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+
+</div>
+<th:block layout:fragment="scripts">
+    <!-- Page-Level Scripts -->
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            var table = $('#currbank').DataTable({
+                responsive: true,
+                "searching": false
+            });
+
+        });
+        /*]]>*/
+    </script>
+
+</th:block>
+
+
+</body>
+</html>

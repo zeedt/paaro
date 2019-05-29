@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.0/empty_page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Apr 2015 10:53:24 GMT -->
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Paaro | Exchange</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.js"></script>
+
+
+
+    <!-- Data Tables -->
+    <link href="../css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="../css/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
+    <link href="../css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet"/>
+    <link href="../css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+    <link href="../css/animate.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
+    <link href="../template-css/users.css" rel="stylesheet"/>
+
+</head>
+
+<body onclick="redirectToPage()">
+<script type='text/javascript'>
+    $.ajax({
+        type : "GET",
+        beforeSend: function(request) {
+            request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("paaro_access_token"));
+        },
+        async:false,
+        url : "/user/authority",
+        error : function (e) {
+            console.log("status code is " + e.status);
+            if (e.status == '401') {
+                console.log("status code is " + 401);
+                localStorage.clear();
+                window.countryCode.href = "/login";
+            }
+        }
+    })
+</script>
+<div class="loading-modal"><!-- Place at bottom of page --></div>
+<div id="wrapper">
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="profile-element"> <span>
+                            <img alt="image" class="img" src="img/corologo.png" width="150px" />
+                             </span>
+                    </div>
+                    <div class="logo-element">
+                        <span>
+                            <img alt="image" class="img" src="img/smalllogo.png" />
+                             </span>
+                    </div>
+                </li>
+                <!-- <li>
+                    <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> </a>
+                </li> -->
+
+                <li>
+                    <a href="/"><i class="fa fa-edit"></i><span class="nav-label">Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="/view/view-authorities"><i class="fa fa-edit"></i><span class="nav-label">Authority</span></a>
+                </li>
+                <li>
+                    <a href="/view/users"><i class="fa fa-edit"></i><span class="nav-label">View users</span></a>
+                </li>
+                <li>
+                    <a href="/view/setting-view"><i class="fa fa-edit"></i><span class="nav-label">General Settings</span></a>
+                </li>
+                <li>
+                    <a href="/view/currency"><i class="fa fa-edit"></i><span class="nav-label">Currency</span></a>
+                </li>
+                <li>
+                    <a href="/view/audit-log"><i class="fa fa-edit"></i><span class="nav-label">Audit Log</span></a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">Welcome to Paaro Trade Portal.</span>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages">
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="../img/a7.jpg" />
+                                    </a>
+                                    <div class="media-body">
+                                        <small class="pull-right">46h ago</small>
+                                        <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br/>
+                                        <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="../img/a4.jpg" />
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right text-navy">5h ago</small>
+                                        <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br/>
+                                        <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="../img/profile.jpg" />
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right">23h ago</small>
+                                        <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br/>
+                                        <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="mailbox.html">
+                                        <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="mailbox.html">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="profile.html">
+                                    <div>
+                                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                        <span class="pull-right text-muted small">12 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="grid_options.html">
+                                    <div>
+                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="notifications.html">
+                                        <strong>See All Alerts</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <button onclick="logoutUser()">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </button>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Currencies`</h5>
+                            <div class="ibox-tools">
+                                <button onclick="showAddCurrencyModal()" class="btn btn-primary btn-xs">Add new currency</button>
+                            </div>
+                        </div>
+                            <!-- COntent goes here-->
+
+                            <table>
+                                <div th:if="${currencies.size()==0}" style="padding-bottom: 10px;padding-left: 10px">No Currency found</div>
+
+                                <div th:if="${currencies.size()>0}" class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Description</th>
+                                            <th>Rate to naira</th>
+                                            <th>No of wallets</th>
+                                            <th>Disabled</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr th:each="currency:${currencies}">
+                                            <td th:text="${currency.type}" th:onclick="'javascript : showUserModal(\''+${currency.type}+'\');'">
+
+                                            </td>
+                                            <td th:text="${currency.description}" style="vertical-align: middle"></td>
+                                            <td th:text="${currency.rateToNaira}" style="vertical-align: middle"></td>
+                                            <td th:text="${currency.walletList.size()}" style="vertical-align: middle"></td>
+                                            <td th:if="${currency.disabled}" style="vertical-align: middle">
+                                                <label class="switch">
+                                                    <input type="checkbox" checked="checked" th:id="|toggle${currency.id}" th:onclick="'javascript : activateOrDeactivateUser(\''+${currency.type}+'\', \''+${currency.id}+'\');'" />
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </td>
+                                            <td th:if="${!currency.disabled}" style="vertical-align: middle">
+                                                <label class="switch">
+                                                    <input type="checkbox" th:id="|toggle${currency.id}" th:onclick="'javascript : activateOrDeactivateUser(\''+${currency.type}+'\', \''+${currency.id}+'\');'" />
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </td>
+                                            <td th:onclick="'javascript : showCurrencyModal(\''+${currency.type}+'\');'" style="vertical-align: middle">
+                                                <span><i class="fa fa-eye fa-2x" style="color: lightseagreen"></i></span>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </table>
+
+                            <!--Content ends here-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-user" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg" style="overflow: scroll">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Currency View</h4>
+                        </div>
+                        <div class="modal-body" style="overflow: scroll">
+
+                            <!--Content will be passed here-->
+                            <div id="modal-currency-content"></div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        <!--This is for adding new currency-->
+            <div id="add-currency" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg" style="overflow: scroll">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Add currency</h4>
+                        </div>
+                        <div class="modal-body" style="overflow: scroll">
+
+                            <!--Content will be passed here-->
+
+                            <div class="row main">
+                                <div class="main-login main-center">
+                                    <form class="form-horizontal" method="post" action="#">
+
+                                        <div class="form-group">
+                                            <label for="currencyType" class="cols-sm-2 control-label">Currency code</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                                    <input type="text" class="form-control" name="currencyType" id="currencyType"  placeholder="Enter Currency Code e.g NGN"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="conversionRateToNaira" class="cols-sm-2 control-label">Conversion rate</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                                    <input type="text" class="form-control" name="conversionRateToNaira" id="conversionRateToNaira"  placeholder="Enter Conversion Rate e.g 360 for 1 dollar"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="description" class="cols-sm-2 control-label">Description</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                                    <input type="text" class="form-control" name="description" id="description"  placeholder="Enter Popular name e.g Naira for NGN"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <button type="button" onclick="addCurrency()" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="footer">
+            <div>
+                <strong>Copyright</strong> Paaro Exchange &copy; 2018
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="../js/jquery-2.1.1.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootbox.min.js"></script>
+<script src="../js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Data Tables -->
+<script src="../js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="../js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="../js/plugins/dataTables/dataTables.responsive.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="../js/inspinia.js"></script>
+<script src="../js/plugins/pace/pace.min.js"></script>
+<script src="../template-js/currency.js"> </script>
+<script src="../template-js/underscore-min.js"> </script>
+<script>
+    $(document).ready(function() {
+        $("#user-filter").focus();
+
+        var delay = (function(){
+            var timer = 0;
+            return function(callback, ms){
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        $('#user-filter').keyup(function(event){
+            delay(function(){
+                $('#submit-user-search').click();
+            }, 500 );
+        });
+
+    });
+</script>
+<style>
+    hr{
+        width: 10%;
+        color: #fff;
+    }
+
+    .form-group{
+        margin-bottom: 15px;
+    }
+
+    label{
+        margin-bottom: 15px;
+    }
+
+    input,
+    input::-webkit-input-placeholder {
+        font-size: 11px;
+        padding-top: 3px;
+    }
+
+    .main-login{
+        background-color: #fff;
+        /* shadows and rounded borders */
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+    }
+
+    .main-center{
+        margin-top: 30px;
+        margin: 0 auto;
+        max-width: 500px;
+        padding: 40px 40px;
+
+    }
+
+    .login-button{
+        margin-top: 5px;
+    }
+
+    .login-register{
+        font-size: 11px;
+        text-align: center;
+    }
+</style>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body style="width: 700px">
+<table xmlns:th="http://www.w3.org/1999/xhtml">
+    <div>
+        <p>Dear <span th:text="${firstName}"></span>,</p><br />
+
+        You have been created as admin user on Paaro. Your password is <h3 th:text="${password}"></h3>
+
+        Click <a href="${verificationLink}"> here </a> to activate your account <p></p>
+
+        Kindly change this password at your convenient time.
+
+        <p>Cheers.</p>
+
+        <p>Paaro Trade.</p>
+
+    </div>
+</table>
+</body>
+</html>

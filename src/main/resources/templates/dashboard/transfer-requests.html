@@ -1,0 +1,107 @@
+<div class="row col-md-12" style="margin-top: 20px; margin-bottom: 20px" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+        <div th:text="${currentPage}" hidden="hidden" id="transferReqCurrentPage"></div>
+        <div th:text="${totalNoOfPages}" hidden="hidden" id="transferReqTotalNoOfPages"></div>
+        <div hidden="hidden" id="transfer-request-email"></div>
+
+        <div class="row">
+
+            <div class="col-md-2">
+                <input type = "date" class="form-control" id="fromDate" name="fromDate" />
+            </div>
+            <div class="col-md-2">
+                <input type = "date" class="form-control" id="toDate" name="toDate" />
+            </div>
+
+            <div class="col-sm-6 pull-right">
+                <div id="imaginary_container">
+                    <div class="input-group stylish-input-group">
+                        <input type="text" class="form-control"  placeholder="Filter with account name...." id="transfer-filter" />
+                        <span class="input-group-addon">
+                        <button type="submit" onclick="filterTransferRequestTransaction()" id="submit-search">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-download" onclick="downloadTransferRequestTransaction()" id="download-transaction"></span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3>Transfer request</h3>
+
+        <div th:if="${totalNoOfTransactions > 0}">
+            <h4 th:text="${totalNoOfTransactions} + ' transaction(s) found' "></h4>
+        </div>
+
+        <table class="table table-striped" >
+
+            <tr th:if="${transactions == null OR transactions.size() == 0}">
+                <td>No transactions fetched</td>
+            </tr>
+
+            <thead>
+            <tr th:if="${transactions != null AND transactions.size()>0}">
+                <td>Currency(From)</td>
+                <td>Currency(To)</td>
+                <td>Actual Amount</td>
+                <td>Charge Amount</td>
+                <td>Equivalent Amount</td>
+                <td>Exchange Rate</td>
+                <td>Account Name</td>
+                <td>System ref Id</td>
+                <td>TP ref Id</td>
+                <td>Narration</td>
+                <td>Status</td>
+                <td>Date initiated</td>
+            </tr>
+            </thead>
+
+            <tbody th:if="${transactions != null AND transactions.size()>0}">
+            <tr th:each="transaction:${transactions}">
+                <td th:text="${transaction.fromCurrency.description}"></td>
+                <td th:text="${transaction.toCurrency.description}"></td>
+                <td th:text="${transaction.effectiveAmount}"></td>
+                <td th:text="${transaction.chargeAmount}"></td>
+                <td th:text="${transaction.equivalentAmount}"></td>
+                <td th:text="${transaction.exchangeRate}"></td>
+                <td th:text="${transaction.toAccountName}"></td>
+                <td th:text="${transaction.paaroReferenceId}"></td>
+                <td th:text="${transaction.thirdPartyReferenceId}"></td>
+                <td th:text="${transaction.customerNarration}"></td>
+                <td th:text="${transaction.transactionStatus}"></td>
+                <td th:text="${transaction.initiatedDate}"></td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+        <div class="col-md-4 col-md-offset-4" style="font-size: 15px;">
+            <a href="javascript: loadPreviousPage()">Prev</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript: loadNextPage()">Next</a>
+        </div>
+
+    <script>
+        $(document).ready(function() {
+
+            var delay = (function(){
+                var timer = 0;
+                return function(callback, ms){
+                    clearTimeout (timer);
+                    timer = setTimeout(callback, ms);
+                };
+            })();
+
+            $('#transfer-filter').keyup(function(event){
+                delay(function(){
+                    $('#submit-search').click();
+                }, 500 );
+            });
+
+        });
+    </script>
+
+</div>

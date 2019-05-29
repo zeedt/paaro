@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Audit</h5>
+        </div>
+    </div>
+    <!-- /Title -->
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">log detail</h6>
+                    </div>
+                    <div class="pull-right">
+                        <a href="/app/audit" class="pull-left btn btn-success btn-xs mr-15">Back</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+
+                        <table class="table table-striped dt-responsive no-wrap table-bordered table-hover" id="table">
+                            <thead>
+                            <tr>
+                                <th>Before</th>
+                                <th>After</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td style ="word-break:break-all;width:50%;">
+                                    <th:block th:text="${auditLog.initialData}"></th:block>
+                                </td>
+                                <td style ="word-break:break-all;">
+                                    <th:block th:text="${auditLog.finalData}"></th:block>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+
+
+</div>
+<th:block layout:fragment="scripts">
+
+    <script th:src="@{~/js/jsonpath-0.8.0.js}"></script>
+    <!-- Page-Level Scripts -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var parseJsonAsList = function(jsn,path){
+
+            var result = '';
+            for(node in jsn){
+
+                if(Object.prototype.toString.call(jsn[node]) === '[object Array]')
+                {
+
+                    current_path = path.endsWith('[') ? path + node + ']' : path + '.' +node;
+
+                    b = jsonPath(beforeData,current_path)[0] ;
+                    a = jsonPath(afterData,current_path)[0];
+
+                    if(true ){
+
+                        result += '<li class="list-group-item">'+ node +':<ul class="list-group">' + parseJsonAsList(jsn[node],current_path+'[') + '</ul></li>';
+                    }else{
+                        result += '<li class="list-group-item list-group-item-danger">'+ node +':<ul class="list-group">' + parseJsonAsHTMLTree(jsn[node],current_path+'[') + '</ul></li>';
+                    }
+                }
+                else if(Object.prototype.toString.call(jsn[node]) === '[object Object]')
+                {
+
+
+                    current_path = path.endsWith('[') ? path + node + ']' : path + '.' +node;
+                    /* if(jsonPath(beforeData,current_path)){
+
+                     }
+                     b = jsonPath(beforeData,current_path)[0] ;
+                     a = jsonPath(afterData,current_path)[0];
+                     */
+                    if(true){
+                        result += '<li class="list-group-item">'+ node +':<ul class="list-group">' + parseJsonAsList(jsn[node],current_path) + '</ul></li>';
+                    }else{
+                        result += '<li class="list-group-item list-group-item-danger">'+ node +':<ul class="list-group">' + parseJsonAsList(jsn[node],current_path) + '</ul></li>';
+                    }
+                }
+                else{
+
+
+                    current_path = path.endsWith('[') ? path + node + ']' : path + '.' +node;
+
+                    b = jsonPath(beforeData,current_path) ? jsonPath(beforeData,current_path)[0] : 'undefined' ;
+
+                    a = jsonPath(afterData,current_path) ? jsonPath(afterData,current_path)[0] : 'undefined' ;
+
+//                console.log(a);
+//                console.log(b);
+
+                    // alert(jsn[node]);
+                    if(a == b && typeof a != 'undefined' && typeof b != 'undefined' )
+                    {
+
+                        result += '<li class="list-group-item">' + node + ':'+jsn[node] +'</li>'
+                    }else
+                    {
+                        result += '<li class="list-group-item list-group-item-danger">' + node + ':'+jsn[node] +'</li>'
+                    }
+                }
+
+            }
+            return result;
+        }
+        var beforeData = JSON.parse([[${auditLog.initialData}]]);
+        var afterData =JSON.parse([[${auditLog.finalData}]]);
+        $(document).ready(function() {
+
+            $("#table").DataTable({
+                "searching" : false,
+                "processing" : true,
+                "ordering" : false,
+                dom : 't',
+                "columnDefs" : [ {
+                    "targets" : 0,
+                    "className" : "dt-center",
+                    "render" : function(data, type, full, meta) {
+
+                        if (type === 'display') {
+                            temp = data;
+                            if(!temp || 0 === temp.length){
+                                temp = '{}'
+                            }
+                            before = JSON.parse(temp);
+
+                            return '<ul>'+parseJsonAsList(before,'$')+'</ul>';
+                        }
+                        return data;
+                    }
+                },{
+                    "targets" : 1,
+                    "className" : "dt-center",
+                    "render" : function(data, type, full, meta) {
+                        if (type === 'display') {
+                            temp = data;
+                            if(!temp || 0 === temp.length ){
+                                temp = '{}'
+                            }
+                            before = JSON.parse(temp);
+
+                            return '<ul>'+parseJsonAsList(before,'$')+'</ul>';
+                        }
+                        return data;
+                    }
+                }  ]
+            });
+
+        });
+        /*]]>*/
+    </script>
+
+</th:block>
+
+</html>

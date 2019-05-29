@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Admin Users</h5>
+        </div>
+    </div>
+    <!-- /Title -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">Manage Admin User Authorities</h6>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <div class="form-wrap">
+                            <form class="form-horizontal" method="post" action="/app/admin/authority" th:object="${managedUser}">
+
+                                <input type="hidden" th:field="*{id}" class="form-control">
+
+                                <fieldset>
+                                    <legend>Permissions</legend>
+                                    <div class="row ml-5">
+
+                                        <div class="form-group text-left col-lg-5">
+                                            <select multiple="multiple"
+                                                    class="form-control left-selector">
+                                                <option th:each="permission: ${nonUserAuthorities}"
+                                                        th:value="${permission.authority}"
+                                                        th:text="${permission.description}"></option>
+
+                                            </select>
+                                        </div>
+
+                                        <div class="btn-group-vertical col-xs-1">
+                                            <button type="button"
+                                                    class="btn btn-default text- btn-circle btn-default right-btn">
+                                                <i class="fa fa-long-arrow-right"></i>
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-default text-center btn-circle left-btn">
+                                                <i class="fa fa-long-arrow-left"></i>
+                                            </button>
+
+                                        </div>
+                                        <div class="form-group col-lg-5">
+                                            <select multiple="multiple"
+                                                    class="form-control right-selector"
+                                                    name="permissionsList">
+                                                <option th:each="p: ${userAuthorities}"
+                                                        th:value="${p.authority}" th:text="${p.description}"></option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+
+                                <div class="form-group mb-0">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="cancel" type="button" class="btn btn-default"><span class="btn-text">cancel</span></button>
+
+                                        <button id="btn-save" type="submit" class="btn btn-success btn-anim"><i
+                                                class="icon-rocket"></i><span class="btn-text">submit</span></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+</div>
+<th:block layout:fragment="scripts">
+
+    <script type="text/javascript">
+        $().ready(
+            function () {
+
+                $('.left-btn').click(
+                    function () {
+                        return !$('.right-selector option:selected')
+                            .remove().appendTo('.left-selector');
+                    });
+                $('.right-btn').click(
+                    function () {
+                        return !$('.left-selector option:selected')
+                            .remove().appendTo('.right-selector');
+                    });
+            });
+
+        $("#btn-save").on("click", function (e) {
+            $('.right-selector option').prop("selected", true);
+            $("#form-save").submit();
+        });
+
+
+        document.getElementById("cancel").onclick = function () {
+            location.href = "/app/admin";
+        }
+
+    </script>
+
+</th:block>
+
+
+</body>
+</html>

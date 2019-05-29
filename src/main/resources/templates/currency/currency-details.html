@@ -1,0 +1,80 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+    <div th:text="${currentPage}" hidden="hidden" id="walletCurrentPage"></div>
+    <div th:text="${totalNoOfPages}" hidden="hidden" id="walletReqTotalNoOfPages"></div>
+    <div hidden="hidden" id="currency-type"></div>
+
+    <div class="row">
+        <div class="col-sm-6 pull-right">
+            <div id="imaginary_container">
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control"  placeholder="Filter with owner name...." id="wallet-filter" />
+                    <span class="input-group-addon">
+                        <button type="submit" onclick="filterWallet()" id="submit-search">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Currency wallet(s)</h3>
+
+
+    <div th:if="${totalNoOfWallets > 0}">
+        <h4 th:text="${totalNoOfWallets} + ' wallet(s) found for currency' "></h4>
+    </div>
+
+    <table class="table table-striped" >
+
+        <tr th:if="${wallets == null OR wallets.size() == 0}">
+            <td>No wallet found for currency</td>
+        </tr>
+
+        <thead>
+        <tr th:if="${wallets != null AND wallets.size()>0}">
+            <td>Currency</td>
+            <td>Ledger balance</td>
+            <td>Available balance</td>
+            <td>Wallet owner</td>
+        </tr>
+        </thead>
+
+        <tbody th:if="${wallets != null AND wallets.size()>0}">
+        <tr th:each="wallet:${wallets}">
+            <td th:text="${wallet.currency.description}"></td>
+            <td th:text="${wallet.ledgerAccountBalance}"></td>
+            <td th:text="${wallet.availableAccountBalance}"></td>
+            <td th:text="${wallet.managedUser.firstName} + | ${wallet.managedUser.lastName} " ></td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <div class="col-md-4 col-md-offset-4" style="font-size: 15px;">
+        <a href="javascript: walletPreviousPage()">Prev</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript: walletNextPage()">Next</a>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        var delay = (function(){
+            var timer = 0;
+            return function(callback, ms){
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        $('#wallet-filter').keyup(function(event){
+            delay(function(){
+                $('#submit-search').click();
+            }, 500 );
+        });
+
+    });
+</script>

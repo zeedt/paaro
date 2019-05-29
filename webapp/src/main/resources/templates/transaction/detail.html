@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Transaction Management</h5>
+        </div>
+    </div>
+    <!-- /Title -->
+    <div class="row">
+        <div class="panel panel-default card-view">
+            <div class="panel-heading">
+                <div class="pull-left">
+                    <h6 class="panel-title txt-dark">transaction details</h6>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <table class="table table-responsive">
+                        <tr>
+                            <td>Reference Number</td>
+                            <td th:text="${details.paaroReferenceId}"></td>
+                        </tr>
+                        <tr>
+                            <td>Customer Details</td>
+                            <td><p th:text="${details.managedUser.email}"></p>
+                                <p th:text="${details.managedUser.firstName} +' ' + ${details.managedUser.lastName}"></p>
+                                <p th:text="${details.managedUser.phoneNumber}"></p>
+                                <p th:text="${details.managedUser.displayName}"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>From Currency</td>
+                            <td th:text="${details.fromCurrency.type}"></td>
+                        </tr>
+                        <tr>
+                            <td>Actual Amount</td>
+                            <td>
+                            <span id="actualAmount-hide" class="hide" th:text="${details.actualAmount}"></span>
+                            <p id="actualAmount-show"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Charge Amount</td>
+                            <td>
+                                <span id="chargeAmount-hide" class="hide" th:text="${details.chargeAmount}"></span>
+                                <p id="chargeAmount-show"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total Amount</td>
+                            <td>
+                                <span id="totalAmount-hide" class="hide" th:text="${details.totalAmount}"></span>
+                                <p id="totalAmount-show"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>User's Exchange Rate</td>
+                            <td>
+                                <span id="exchangeRate-hide" class="hide" th:text="${details.exchangeRate}"></span>
+                                <p id="exchangeRate-show"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Wallet Status</td>
+                            <td th:text="${details.walletStatus}"></td>
+                        </tr>
+                        <tr>
+                            <td>To Currency</td>
+                            <td th:text="${details.toCurrency.type}"></td>
+                        </tr>
+                        <tr>
+                            <td>Recepient Details</td>
+                            <td><p th:text="${details.toAccountNumber}"></p>
+                                <p th:text="${details.toAccountName}"></p>
+                                <!--<p th:text="${details.receivingBank.bankName}"></p>-->
+                                <!--<p th:text="${details.receivingBank.bankCode}"></p>-->
+                                <!--<p th:text="${details.receivingBank.countryCode}"></p>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Narration</td>
+                            <td th:text="${details.narration}"></td>
+                        </tr>
+                        <tr>
+                            <td>Initiated On</td>
+                            <td th:text="${details.initiatedDate}"></td>
+                        </tr>
+                        <tr>
+                            <td>Transaction Status</td>
+                            <td th:text="${details.transactionStatus}"></td>
+                        </tr>
+                        <tr>
+                            <td>Mapped ?</td>
+                            <td>
+                                <p th:if="${details.transferRequestMap == null}">false</p>
+                                <p th:if="${details.transferRequestMap != null}">true</p>
+                            </td>
+                        </tr>
+                        <tr th:if="${details.transferRequestMap != null && details.fromCurrency.type == 'NGN'}">
+                            <td>Mapped to (Matchee) <span th:text="${details.fromCurrency.type}"> </span></td>
+                            <td>
+                                <p th:text="${details.transferRequestMap.otherCurrencyHolderTransaction.id}"></p>
+                                <p>
+                                    <a th:href="@{/app/transaction/{path}/detail(path=${details.transferRequestMap.otherCurrencyHolderTransaction.id})}">View
+                                        details</a></p>
+                            </td>
+                        </tr>
+                        <!--<tr th:if="${details.transferRequestMap != null && details.fromCurrency.type != 'NGN'}">-->
+                            <!--<td>Mapped to (Matchee) <span th:text="${details.fromCurrency.type}"> </span></td>-->
+                            <!--<td>-->
+                                <!--<p th:text="${details.transferRequestMap.nairaHolderTransaction.id}"></p>-->
+                                <!--<p>-->
+                                    <!--<a th:href="@{/app/transaction/{path}/detail(path=${details.transferRequestMap.nairaHolderTransaction.id})}">View-->
+                                        <!--details</a></p>-->
+
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <tr>
+                            <td>Settled ?</td>
+                            <td th:text="${details.settled}"></td>
+                            <!--<td></td>-->
+                        </tr>
+                        <tr th:if="${details.settled != true && details.transferRequestMap != null}">
+                            <td></td>
+                            <td><a th:href="@{/app/transaction/{path}/settle(path=${details.id})}"
+                                   class="btn btn-sm btn-success">Settle Transaction</a></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<th:block layout:fragment="scripts">
+
+    <script>
+        $(document).ready(function () {
+
+            var available = $("#actualAmount-hide").text();
+            $("#actualAmount-show").text(accounting.formatMoney(available, ''));
+
+            var available = $("#chargeAmount-hide").text();
+            $("#chargeAmount-show").text(accounting.formatMoney(available, ''));
+
+            var available = $("#totalAmount-hide").text();
+            $("#totalAmount-show").text(accounting.formatMoney(available, ''));
+
+            var available = $("#exchangeRate-hide").text();
+            $("#exchangeRate-show").text(accounting.formatMoney(available, ''));
+        });
+    </script>
+
+</th:block>
+
+
+</body>
+</html>

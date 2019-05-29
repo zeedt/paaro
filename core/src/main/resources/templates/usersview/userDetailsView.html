@@ -1,0 +1,58 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <div hidden="hidden" id="user-email" th:text="${email}"></div>
+
+    <table class="table table-striped" xmlns:th="http://www.w3.org/1999/xhtml" >
+
+
+    <thead>
+    <tr th:if="${wallets != null AND wallets.size()>0}">
+        <td>Currency Type</td>
+        <td>Ledger Balance</td>
+        <td>Available balance</td>
+    </tr>
+    <tr th:if="${wallets == null OR wallets.size()==0}">
+        <td>No wallet assigned to user</td>
+    </tr>
+    </thead>
+
+    <tbody th:if="${wallets != null AND wallets.size()>0}">
+    <tr th:each="wallet:${wallets}">
+        <td th:text="${wallet.currency.description}"></td>
+        <td th:text="${wallet.ledgerAccountBalance}"></td>
+        <td th:text="${wallet.availableAccountBalance}"></td>
+    </tr>
+
+    </tbody>
+
+</table>
+
+
+
+<h3>User authorities</h3>
+<div style="overflow: scroll;margin-bottom: 30px">
+    <select class="selectpicker col-md-12" th:if="${authorities != null AND authorities.size()>0}" multiple="multiple" style="height: 200px;margin-bottom: 10px" id="authorities" >
+        <option th:each="authority:${authorities}" class="form-control" th:value="${authority.authority}" th:text="${authority.description}"></option>
+    </select>
+
+    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="addSelectedAuthorities()">Add</button>
+</div>
+<table class="table table-striped" >
+
+    <tr th:if="${userDetails == null OR userDetails.authorityList == null OR userDetails.authorityList.size()==0}">
+        <td>No authority assigned to user</td>
+    </tr>
+
+    <tbody th:if="${userDetails != null AND userDetails.authorityList != null AND userDetails.authorityList.size()>0}">
+    <tr th:each="authority:${userDetails.authorityList}">
+        <td th:text="${authority.description}"></td>
+        <td  th:onclick="'javascript : deleteUserAuthority(\''+${userDetails.managedUser.id}+'\', \''+${authority.id}+'\');'">
+            <span>
+                <i class="fa fa-remove fa-2x" style="color: red;"></i>
+            </span>
+        </td>
+    </tr>
+
+    </tbody>
+
+</table>
+</div>

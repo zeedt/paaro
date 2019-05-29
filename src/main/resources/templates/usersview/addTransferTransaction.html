@@ -1,0 +1,158 @@
+<div class="" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="row main">
+        <div class="main-login main-center">
+            <form class="form-horizontal" method="post" action="#">
+                <input hidden="hidden" id="user-email" />
+                <div class="form-group">
+                    <label for="accountName" class="cols-sm-2 control-label">Account Name</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="accountName" id="accountName"  placeholder="Enter Account name"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="accountNumber" class="cols-sm-2 control-label">Account Number</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                            <input type="number" class="form-control" name="accountNumber" id="accountNumber"  placeholder="Enter Account Number"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount" class="cols-sm-2 control-label">Amount</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="amount" id="amount"  placeholder="Enter Amount"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fromWallet" class="cols-sm-2 control-label">From Wallet</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <select class="form-control" id="fromWallet" >
+                                <option th:each="wallet:${wallets}" th:value="${wallet.currency.type}" th:text="${wallet.currency.description}"></option>
+                            </select>
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="toCurrency" class="cols-sm-2 control-label">To Currency</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <select class="form-control" id="toCurrency">
+                                <option value="" th:onclick="'javascript : setRateWithCurrency(\''+''+'\');'">--Select currency type--</option>
+                                <option th:each="currency:${currencies}" th:value="${currency.type}" th:text="${currency.description}+'('+${currency.rateToNaira}+')'" th:onclick="'javascript : setRateWithCurrency(\''+${currency.rateToNaira}+'\');'"></option>
+                            </select>
+                            <span class="input-group-addon"><i class="fa fa-money fa" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerNarration" class="cols-sm-2 control-label">Narration</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="customerNarration" id="customerNarration" />
+                        </div>
+                    </div>
+                </div>
+
+                <div >
+                   <button type="button" onclick="computeAndGenerateToken()" class="btn btn-primary" >Compute And Send Token</button>
+                </div>
+
+                <div id="information" style="visibility: hidden">
+                <div col-md-12>
+                    Total amount : <span id="total-amount"></span>
+                </div>
+
+                <div col-md-12>
+                    Total charge : <span id="total-charge"></span>
+                </div>
+
+                <div col-md-12>
+                    Equivalent amount : <span id="equivalent-amount"></span>
+                </div>
+
+                <div col-md-12>
+                    Charge rate (In naira) : <span id="charge-rate"></span>
+                </div>
+                <div col-md-12>
+                    Exchange rate (In naira) : <span id="exchange-rate"></span>
+                </div>
+                    <div class="form-group" id="token-div">
+                        <label for="token" class="cols-sm-2 control-label">Token</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="token" id="token"  placeholder="Enter sent token"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <button type="button" onclick="logTransferRequest()" class="btn btn-primary btn-lg btn-block login-button">Log Request For User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    hr{
+        width: 10%;
+        color: #fff;
+    }
+
+    .form-group{
+        margin-bottom: 15px;
+    }
+
+    label{
+        margin-bottom: 15px;
+    }
+
+    input,
+    input::-webkit-input-placeholder {
+        font-size: 11px;
+        padding-top: 3px;
+    }
+
+    .main-login{
+        background-color: #fff;
+        /* shadows and rounded borders */
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+    }
+
+    .main-center{
+        margin-top: 30px;
+        margin: 0 auto;
+        max-width: 500px;
+        padding: 40px 40px;
+
+    }
+
+    .login-button{
+        margin-top: 5px;
+    }
+
+    .login-register{
+        font-size: 11px;
+        text-align: center;
+    }
+</style>

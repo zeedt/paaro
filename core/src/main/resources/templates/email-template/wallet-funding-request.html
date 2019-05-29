@@ -1,0 +1,14 @@
+<table xmlns:th="http://www.w3.org/1999/xhtml">
+    <div style="padding: 15px;width: 700px;">
+        <p>Dear <span th:text="${username}"></span></p><br />
+
+
+        Your transfer request from your Paaro wallet of currency type <span th:text="${currencyType}"></span> has been matched successfully. <br/>
+
+        Kindly fund your paaro wallet with minimum of <span th:text="${effectiveAmount}"></span> for your transaction to be completed.
+
+        <p>Cheers.</p>
+
+        <p>Paaro Trade.</p>
+    </div>
+</table>

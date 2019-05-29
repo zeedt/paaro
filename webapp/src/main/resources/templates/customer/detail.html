@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Profile Management</h5>
+        </div>
+        <!-- Breadcrumb -->
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb">
+                <li><a href="/app/dashboard">Dashboard</a></li>
+                <li class="active"><span>Customer Management</span></li>
+            </ol>
+        </div>
+        <!-- /Breadcrumb -->
+    </div>
+    <!-- /Title -->
+
+    <div class="row">
+        <div class="col-lg-4 col-md-12 col-xs-12">
+            <div class="panel panel-default card-view  pa-0">
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body  pa-0">
+                        <div class="profile-box">
+                            <div class="row">
+                                <div class="profile-info col-sm-4 mr-3">
+                                    <div class="profile-img-wrap">
+                                        <img class=" mb-10" th:if="${managedUser.base64Image == null}"
+                                             th:src="@{~/img/mock1.jpg}" alt="user">
+                                        <img class=" mb-10" th:if="${managedUser.base64Image != null}"
+                                             th:src="${managedUser.base64Image}" alt="user">
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h5 class="block mt-10 mb-5 weight-500 capitalize-font txt-danger"
+                                        th:text="${managedUser.firstName + ' ' + managedUser.lastName}">Madalyn
+                                        Rascon</h5>
+                                    <h6 class="block capitalize-font" th:text="${managedUser.displayName}">Developer
+                                        Geek</h6>
+                                    <h6 class="block capitalize-font" th:text="${managedUser.email}">Developer Geek</h6>
+                                    <h6 class="block capitalize-font" th:text="${managedUser.phoneNumber}">Developer
+                                        Geek</h6>
+                                    <p class="block capitalize-font" th:text="${managedUser.dateCreated}">Developer
+                                        Geek</p>
+                                    <input type="hidden" id="pattern" th:value="${managedUser.id}">
+                                </div>
+                            </div>
+                            <div class="social-info">
+                                <div class="row">
+                                    <div class="col-xs-3 text-center">
+                                        <span class="counts block head-font"><span class="counter-anim"
+                                                                                   th:text="${customerStat.completedTrans}">345</span></span>
+                                        <span class="counts-text block">Completed Bids</span>
+                                    </div>
+                                    <div class="col-xs-3 text-center">
+                                        <span class="counts block head-font"><span class="counter-anim"
+                                                                                   th:text="${customerStat.ongoingTrans}">246</span></span>
+                                        <span class="counts-text block">Ongoing Bids</span>
+                                    </div>
+                                    <div class="col-xs-3 text-center">
+                                        <span class="counts block head-font"><span class="counter-anim"
+                                                                                   th:text="${customerStat.allTrans}">246</span></span>
+                                        <span class="counts-text block">All Bids</span>
+                                    </div>
+                                    <div class="col-xs-3 text-center">
+                                        <a class="btn btn-danger"
+                                           th:href="@{/app/customer/{path}/disable(path=${managedUser.id})}"
+                                           th:if="${managedUser.active == true}">
+                                            <span class="block head-font"><i class="fa fa-ban"></i></span>
+                                            <span class="counts-text block">Disable</span>
+                                        </a>
+                                        <a class="btn btn-success"
+                                           th:href="@{/app/customer/{path}/enable(path=${managedUser.id})}"
+                                           th:if="${managedUser.active == false}">
+                                            <span class="block head-font"><i class="fa fa-check-circle"></i></span>
+                                            <span class="counts-text block">Enable</span>
+                                        </a>
+
+                                    </div>
+                                </div>
+                                <a class="btn btn-default btn-block btn-outline btn-anim mt-30"
+                                   th:href="@{/app/customer/{path}/edit(path=${managedUser.id})}"><i
+                                        class="fa fa-pencil"></i><span class="btn-text">edit profile</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-xs-12">
+            <div class="panel card-view pb-20" >
+                <div class="panel-heading small-panel-heading relative">
+                    <div class="pull-left">
+                        <h6 class="panel-title">Wallet - <span th:text="${ngnWallet.currency.type}"></span></h6>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="head-overlay"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body row pa-0">
+                        <div class="sm-data-box">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-xs-12 text-center pl-0 pr-0 data-wrap-left">
+                                        <span class="weight-500 uppercase-font block">Available</span>
+                                        <span class="txt-dark block counter">
+                                            <span class="counter-anim available-hide hide" th:text="${ngnWallet.availableAccountBalance}">15678</span>
+                                            <span class="counter-anim available-show">15678</span>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-12 text-center  pl-0 pr-0 data-wrap-right">
+                                        <span class="weight-500 uppercase-font  block">Ledger</span>
+                                        <span class="txt-dark block counter">
+                                            <span class="counter-anim ledger-hide hide" th:text="${ngnWallet.ledgerAccountBalance}">45678</span>
+                                            <span class="counter-anim ledger-show">45678</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-default btn-block btn-outline btn-anim mt-30"
+                   th:href="@{/app/customer/{id}/{path}/kyc(id=${managedUser.id},path=${ngnWallet.currency.type})}"><i
+                        class="fa fa-eye"></i><span class="btn-text">View Wallet KYC & History</span></a>
+            </div>
+
+        </div>
+        <div class="col-lg-4 col-md-12 col-xs-12">
+            <div class="panel card-view pb-20" >
+                <div class="panel-heading small-panel-heading relative">
+                    <div class="pull-left">
+                        <h6 class="panel-title">Wallet - <span th:text="${gbpWallet.currency.type}"></span></h6>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="head-overlay"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body row pa-0">
+                        <div class="sm-data-box">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-xs-12 text-center pl-0 pr-0 data-wrap-left">
+                                        <span class="weight-500 uppercase-font block">Available</span>
+                                        <span class="txt-dark block counter">
+                                            <span class="counter-anim available-gbp-hide hide" th:text="${gbpWallet.availableAccountBalance}">45678</span>
+                                            <span class="counter-anim available-gbp-show">45678</span>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-12 text-center  pl-0 pr-0 data-wrap-right">
+                                        <span class="weight-500 uppercase-font  block">Ledger</span>
+                                        <span class="txt-dark block counter">
+                                            <span class="counter-anim ledger-gbp-hide hide" th:text="${gbpWallet.ledgerAccountBalance}">45678</span>
+                                            <span class="counter-anim ledger-gbp-show">45678</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-default btn-block btn-outline btn-anim mt-30"
+                   th:href="@{/app/customer/{id}/{path}/kyc(id=${managedUser.id},path=${gbpWallet.currency.type})}"><i
+                        class="fa fa-eye"></i><span class="btn-text">View Wallet KYC & History</span></a>
+            </div>
+
+        </div>
+    </div>
+    <!-- /Row -->
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">Customer Notes</h6>
+                    </div>
+                    <div class="pull-right">
+                        <a th:href="@{/app/customer/{path}/notes/new(path=${managedUser.id})}" class="pull-left btn btn-success btn-xs mr-15">Add New</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body table-responsive">
+                        <table id="note" class="table table-responsive col-12">
+                                        <thead>
+                                        <tr>
+                                            <th>Made On</th>
+                                            <th>Comment</th>
+                                            <th>Made By</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>Made On</th>
+                                            <th>Comment</th>
+                                            <th>Made By</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading" style="cursor: pointer;" id="searchHeader">
+                            <span class="glyphicon glyphicon-search"></span><b>Search</b>
+                        </div>
+                        <div class="panel-body" id="searchContent">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" id="paaroReferenceId" name="paaroReferenceId"
+                                               placeholder="Reference Number"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" id="accountNumber" name="accountNumber"
+                                               placeholder="Recipient Account Number"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-daterange input-group col-lg-4" id="date-range">
+                                        <input type="text" data-date-format="dd-mm-yyyy" class="form-control datepicker"
+                                               id="fromDate" name="fromDate" placeholder="Start date" required="required"/>
+                                        <span class="input-group-addon no-border no-bd"
+                                              style="bacground:transparent !important">to</span>
+                                        <input type="text" data-date-format="dd-mm-yyyy" class="form-control datepicker"
+                                               name="toDate" id="toDate" placeholder="End date" required="required"/>
+                                        <!--<span id="emptyDateError"   class="error">Start and end date is mandatory</span>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+
+
+                                <div class="form-group">
+                                    <div class="col-lg-4">
+                                        <select name="fromCurrency" id="fromCurrency" class="form-control">
+                                            <option value="">--From Currency--</option>
+                                            <option th:each="entity: ${currencies}" th:value="${entity.type}" th:text="${entity.description}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-4">
+                                        <select name="toCurrency" id="toCurrency" class="form-control">
+                                            <option value="">--To Currency--</option>
+                                            <option th:each="entity: ${currencies}" th:value="${entity.type}" th:text="${entity.description}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-4">
+                                        <input type="text" name="email" class="form-control" id="email" placeholder="Customer Email"/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-12">
+
+                                <div class="form-group">
+                                    <div class="col-lg-4">
+                                        <select name="transactionStatus" id="transactionStatus" class="form-control">
+                                            <option value="">--Transaction status--</option>
+                                            <option th:each="entity: ${statuses}" th:value="${entity}" th:text="${entity}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-4">
+                                        <select name="settled" id="isSettled" class="form-control">
+                                            <option value="">--true/false--</option>
+                                            <option value="true">true</option>
+                                            <option value="false">false</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group input-group col-lg-12">
+
+
+                                <div class="col-lg-12">
+                                    <button class="btn btn-success pull-right" id="search" type="button">Go!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-xs-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">Request History</h6>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body table-responsive">
+                        <table id="transaction" class="table table-responsive col-12">
+                                        <thead>
+                                        <tr>
+                                            <th>Reference</th>
+                                            <th>Actual Amount</th>
+                                            <th>Charge Amount</th>
+                                            <th>Transaction Status</th>
+                                            <th>Settlement Status</th>
+                                            <th>Action(s)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>Reference</th>
+                                            <th>Actual Amount</th>
+                                            <th>Charge Amount</th>
+                                            <th>Transaction Status</th>
+                                            <th>Settlement Status</th>
+                                            <th>Action(s)</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<th:block layout:fragment="scripts">
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            var table = $('#note').DataTable({
+                select: false,
+                responsive: true,
+                "lengthMenu": [ [10, 20, 30, -1], [10, 20, 30, "All"] ],
+                "pagingType": "simple_numbers",
+                "searching": false,
+                "paging": true,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    url: "/app/customer/notes",
+                    "type": "GET",
+                    "data": function (d) {
+                        d.csearch = $('#pattern').val();
+                    }
+                },
+                "dom": 'T<"clear">frtlp',
+                "rowId": "id",
+                "columns": [
+                    {"data": "madeOn"},
+                    {"data": "comment"},
+                    {"data": "admin.email"}
+                ]
+            });
+        });
+
+        /*]]>*/
+    </script>
+
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $('#searchContent').hide();
+            $('#searchById').hide();
+            var table = $('#transaction').DataTable({
+                select: false,
+                responsive: true,
+                "lengthMenu": [ [10, 20, 30, -1], [10, 20, 30, "All"] ],
+                "pagingType": "simple_numbers",
+                "searching": false,
+                "paging": true,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    url: "/app/customer/request/transactions",
+                    "type": "GET",
+                    "data": function (d) {
+                        d.csearch = $('#pattern').val();
+                        d.paaroReferenceId = $('#paaroReferenceId').val();
+                        d.fromCurrency = $('#fromCurrency').val();
+                        d.toCurrency = $('#toCurrency').val();
+                        d.fromDate = $('#fromDate').val();
+                        d.toDate = $('#toDate').val();
+                        d.transactionStatus = $('#transactionStatus').val();
+                        d.accountNumber = $('#accountNumber').val();
+                        d.isSettled = $('#isSettled').val();
+                    }
+                },
+                "dom": 'T<"clear">frtlp',
+                "rowId": "id",
+                "columns": [
+                    {"data": "paaroReferenceId"},
+                    {"data": "actualAmount"},
+                    {"data": "chargeAmount"},
+                    {"data": "transactionStatus"},
+                    {"data": "settled"},
+                    {"data": "id"}
+                ],
+                "columnDefs": [{
+                    "targets" : 1,
+                    data: 'actualAmount',
+                    render: $.fn.dataTable.render.number( ',', '.', 2)
+                },{
+                    "targets" : 2,
+                    data: 'chargeAmount',
+                    render: $.fn.dataTable.render.number( ',', '.', 2)
+                },{
+                    "targets": 4,
+                    "data": "settled",
+                    "render": function (data, type, full, meta) {
+                        if (type === 'display') {
+                            if (data == true) {
+                                return "<span class='label label-success'>settled</span>";
+                            } else {
+                                return "<span class='label label-danger'>not settled</span>";
+                            }
+                        }
+                        return data;
+                    }
+                },{
+                        "targets": 5,
+                        "data": "id",
+                        "render": function (data, type, full, meta) {
+                            if (type === 'display') {
+                                return "<a href='/app/transaction/" + data + "/detail' class='mr-25' data-toggle='tooltip' data-original-title='View Details'> <i class='fa fa-eye text-inverse m-r-10'></i> </a>";
+                            }
+                            return data;
+                        }
+                    }
+                ]
+            });
+        });
+
+        $('#searchHeader').on("click",function () {
+            var display = $('#searchContent').css('display');
+            if(display != 'none'){
+                $('#searchContent').hide();
+            }else {
+                $('#searchContent').show();
+
+            }
+        });
+
+        $("#search").on("click", function(e)
+        {
+            $('#searchContent').hide();
+            e.preventDefault();
+            dt = $('#transaction').DataTable();
+            dt.ajax.reload(null, true);
+        });
+
+        var available = $(".available-hide").text();
+        $(".available-show").text(accounting.formatMoney(available, ''));
+
+        var available = $(".ledger-hide").text();
+        $(".ledger-show").text(accounting.formatMoney(available, ''));
+
+        var available = $(".ledger-gbp-hide").text();
+        $(".ledger-gbp-show").text(accounting.formatMoney(available, ''));
+
+        var available = $(".available-gbp-hide").text();
+        $(".available-gbp-show").text(accounting.formatMoney(available, ''));
+
+        /*]]>*/
+    </script>
+</th:block>
+
+
+</body>
+</html>

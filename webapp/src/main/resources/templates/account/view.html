@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Bank Account Management</h5>
+        </div>
+    </div>
+    <!-- /Title -->
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">all accounts</h6>
+                    </div>
+                    <div class="pull-right">
+                        <a href="/app/account/new" class="pull-left btn btn-success btn-xs mr-15">Add New</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <!--<div class="form-group mb-0">-->
+                        <!--<div class="input-group mb-15"> <span class="input-group-btn">-->
+                        <!--<button type="button" class="btn  btn-success"><i class="fa fa-search"></i></button>-->
+                        <!--</span>-->
+                        <!--<input type="text" id="example-input1-group4" name="example-input1-group4" class="form-control" placeholder="Search">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--<hr class="light-grey-hr"/>-->
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table id="bank" class="table table-hover display  pb-30" >
+                                    <thead>
+                                    <tr>
+                                        <th>Bank Name</th>
+                                        <th>Account Name</th>
+                                        <th>Account Number</th>
+                                        <th>Currency</th>
+                                        <th>Status</th>
+                                        <th>Action(s)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="acc : ${bankAccounts}">
+                                        <td th:text="${acc.bankName}"></td>
+                                        <td th:text="${acc.accountName}"></td>
+                                        <td th:text="${acc.accountNumber}"></td>
+                                        <td th:text="${acc.currency.type}"></td>
+                                        <td> <i th:if="${acc.active == false}" class='fa fa-ban  dt-body-center' style='color:red;display:block; text-align:center; margin:0 auto;'></i>
+                                            <i th:if="${acc.active == true}" class='fa fa-check dt-body-center'  data-toggle='tooltip' style='color:green;display:block; text-align:center; margin:0 auto;' ></i></td>
+                                        <td>
+                                            <a th:href='@{/app/account/{type}/edit(type=${acc.id})}'  class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Bank Account</th>
+                                        <th>Account Name</th>
+                                        <th>Account Number</th>
+                                        <th>Currency</th>
+                                        <th>Status</th>
+                                        <th>Action(s)</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+
+
+</div>
+<th:block layout:fragment="scripts">
+
+    <!-- Page-Level Scripts -->
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function() {
+            var table = $('#bank').DataTable({
+                select:false,
+                responsive: true,
+                "searching": false,
+                "paging": true,
+                "processing" : true});
+
+        });
+        /*]]>*/
+    </script>
+</th:block>
+
+
+</body>
+</html>

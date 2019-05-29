@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Pending Wallet Credit</h5>
+        </div>
+    </div>
+    <!-- /Title -->
+    <div class="row">
+        <div class="panel panel-default card-view">
+            <div class="panel-heading">
+                <div class="pull-left">
+                    <h6 class="panel-title txt-dark">transaction details</h6>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <table class="table table-responsive">
+                        <tr>
+                            <td>Payment Reference</td>
+                            <td th:text="${details.paymentReference.paymentReferenceNumber}"></td>
+                        </tr>
+                        <tr>
+                            <td>Payment Reference Generated On</td>
+                            <td th:text="${details.paymentReference.dateGenerated}"></td>
+                        </tr>
+                        <tr>
+                            <td>Customer Details</td>
+                            <td>
+                                <p th:text="${details.paymentReference.wallet.managedUser.email}"></p>
+                                <p th:text="${details.paymentReference.wallet.managedUser.firstName} +' ' + ${details.paymentReference.wallet.managedUser.lastName}"></p>
+                                <p th:text="${details.paymentReference.wallet.managedUser.phoneNumber}"></p>
+                                <p th:text="${details.paymentReference.wallet.managedUser.displayName}"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Currency</td>
+                            <td>
+                                <p th:text="${details.paymentReference.wallet.currency.type}"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Amount</td>
+                            <td>
+                                <span id="amount-hide" class="hide" th:text="${details.amount}"></span>
+                                <p id="amount-show"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Receiving Bank</td>
+                            <td>
+                                <p th:text="${details.paymentReference.paaroBankAccount.bankName}"></p>
+                                <p th:text="${details.paymentReference.paaroBankAccount.accountName}"></p>
+                                <p th:text="${details.paymentReference.paaroBankAccount.accountNumber}"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Teller Number</td>
+                            <td th:text="${details.tellerNumber}"></td>
+                        </tr>
+                        <tr>
+                            <td>Logged Date</td>
+                            <td th:text="${details.loggedDate}"></td>
+                        </tr>
+                        <tr>
+                            <td>User Deposited ? </td>
+                            <td th:text="${details.paymentReference.userDeposited}"></td>
+                        </tr>
+                        <tr>
+                            <td>Payment Verified ? </td>
+                            <td th:text="${details.paymentReference.paymentVerified}"></td>
+                        </tr>
+                        <tr>
+                            <td>Deposit Status</td>
+                            <td th:text="${details.transactionStatus}"></td>
+                        </tr>
+
+                        <tr th:if="${confirm == true}">
+                            <td></td>
+                            <td><a th:href="@{/app/payment/{path}/approve(path=${details.id})}" class="btn btn-sm btn-success">Verify Payment</a></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<th:block layout:fragment="scripts">
+    <script>
+        $(document).ready(function () {
+            var available = $("#amount-hide").text();
+            $("#amount-show").text(accounting.formatMoney(available, ''));
+        });
+    </script>
+</th:block>
+
+
+</body>
+</html>

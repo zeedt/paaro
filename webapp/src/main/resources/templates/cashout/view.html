@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Cash Out Requests</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-heading" style="cursor: pointer;" id="searchHeader">
+                        <span class="glyphicon glyphicon-search"></span><b>Search</b>
+                    </div>
+                    <div class="panel-body" id="searchContent">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" id="walletId" name="walletId"
+                                           placeholder="WalletId"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" id="firstName" name="firstName"
+                                           placeholder="First Name"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" id="lastName" name="lastName"
+                                           placeholder="Last Name"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <select name="cashOutStatus" id="cashOutStatus" class="form-control">
+                                        <option value="">--Cash Out status--</option>
+                                        <option th:each="entity: ${statuses}" th:value="${entity}" th:text="${entity}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <select name="currencyType" id="currencyType" class="form-control">
+                                        <option value="">--Currency--</option>
+                                        <option th:each="entity: ${currencies}" th:value="${entity.type}" th:text="${entity.description}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" id="email" name="email"
+                                           placeholder="Email"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+
+                            <div class="form-group">
+                                <div class="input-daterange input-group col-lg-4" id="date-range">
+                                    <input type="text" data-date-format="dd-mm-yyyy" class="form-control datepicker"
+                                           id="fromDate" name="fromDate" placeholder="Start date" required="required"/>
+                                    <span class="input-group-addon no-border no-bd"
+                                          style="bacground:transparent !important">to</span>
+                                    <input type="text" data-date-format="dd-mm-yyyy" class="form-control datepicker"
+                                           name="toDate" id="toDate" placeholder="End date" required="required"/>
+                                    <!--<span id="emptyDateError"   class="error">Start and end date is mandatory</span>-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group input-group col-lg-12">
+
+
+                            <div class="col-lg-12">
+                                <button class="btn btn-success pull-right" id="search" type="button">Go!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">Cash Out Requests</h6>
+                    </div>
+                    <div class="pull-right">
+                        <!--<a href="/app/customer/new" class="pull-left btn btn-success btn-xs mr-15">Add New</a>-->
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table id="admin" class="table table-hover display  pb-30">
+                                    <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Amount</th>
+                                        <th>Account Name</th>
+                                        <th>Account Number</th>
+                                        <th>Request Date</th>
+                                        <th>Status</th>
+                                        <th>Action(s)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+
+</div>
+<th:block layout:fragment="scripts">
+
+    <!-- Page-Level Scripts -->
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $('#searchContent').hide();
+            $('#searchById').hide();
+            var table = $('#admin').DataTable({
+                select: false,
+                responsive: true,
+                "lengthMenu": [ [10, 20, 30, -1], [10, 20, 30, "All"] ],
+                "pagingType": "simple_numbers",
+                "searching": false,
+                "paging": true,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    url: "/app/cashout/search",
+                    "type": "GET",
+                    "data" : function(d) {
+                        d.walletId = $('#walletId').val();
+                        d.firstName = $('#firstName').val();
+                        d.lastName = $('#lastName').val();
+                        d.email = $('#email').val();
+                        d.cashOutStatus = $('#cashOutStatus').val();
+                        d.currencyType = $('#currencyType').val();
+                        d.fromDate = $('#fromDate').val();
+                        d.toDate = $('#toDate').val();
+                    }
+                },
+                "dom": 'T<"clear">frtlp',
+                "rowId": "id",
+                "columns": [
+                    {"data": "wallet.managedUser.email"},
+                    {"data": "amount"},
+                    {"data": "accountName"},
+                    {"data": "accountNumber"},
+                    {"data": "requestDate"},
+                    {"data": "cashOutStatus"},
+                    {"data": "id"}
+                ],
+                "columnDefs": [{
+                    "targets" : 1,
+                    data: 'amount',
+                    render: $.fn.dataTable.render.number( ',', '.', 2)
+                },{
+                    "targets": 4,
+                    "data": "requestDate",
+                    "render": function (data, type, full, meta) {
+                        if (type === 'display') {
+                            if (data == null)
+                                return data;
+                            var dtStart = new Date(parseInt(data));
+                            var dtStartWrapper = moment(dtStart);
+                            return dtStartWrapper.format('LLLL');
+                        }
+                        return data;
+                    }
+                }, {
+                    "targets": 5,
+                    "data": "transactionStatus",
+                    "render": function (data, type, full, meta) {
+                        if (type === 'display') {
+                            if (data == "VERIFIED") {
+                                return "<span class='label label-success'>VERIFIED</span>";
+                            }else if(data == "PENDING") {
+                                return "<span class='label label-warning'>PENDING</span>";
+                            } else {
+                                return "<span class='label label-danger'>not settled</span>";
+                            }
+                        }
+                        return data;
+                    }
+                }, {
+                    "targets": 6,
+                    "data": "id",
+                    "render": function (data, type, full, meta) {
+                        if (type === 'display') {
+                            return "<a href='/app/cashout/" + data + "/detail' class='mr-25' data-toggle='tooltip' data-original-title='View Details'> <i class='fa fa-eye text-inverse m-r-10'></i> </a>";
+                        }
+                        return data;
+                    }
+                }
+                ]
+        });
+
+        });
+
+        $('#searchHeader').on("click",function () {
+            var display = $('#searchContent').css('display');
+            if(display != 'none'){
+                $('#searchContent').hide();
+            }else {
+                $('#searchContent').show();
+
+            }
+        });
+
+        $("#search").on("click", function(e)
+        {
+            $('#searchContent').hide();
+            e.preventDefault();
+            dt = $('#admin').DataTable();
+            dt.ajax.reload(null, true);
+        });
+        /*]]>*/
+    </script>
+</th:block>
+
+
+</body>
+</html>

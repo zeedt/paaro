@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Authority Management</h5>
+        </div>
+        <!-- Breadcrumb -->
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb">
+                <li><a href="/app/dashboard">Dashboard</a></li>
+            </ol>
+        </div>
+        <!-- /Breadcrumb -->
+    </div>
+    <!-- /Title -->
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">all authorities</h6>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <!--<div class="form-group mb-0">-->
+                        <!--<div class="input-group mb-15"> <span class="input-group-btn">-->
+                        <!--<button type="button" class="btn  btn-success"><i class="fa fa-search"></i></button>-->
+                        <!--</span>-->
+                        <!--<input type="text" id="example-input1-group4" name="example-input1-group4" class="form-control" placeholder="Search">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--<hr class="light-grey-hr"/>-->
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table id="bank" class="table table-hover display  pb-30" >
+                                    <thead>
+                                    <tr>
+                                        <th>Authority</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="acc : ${authorities}">
+                                        <td th:text="${acc.authority}"></td>
+                                        <td th:text="${acc.description}"></td>
+
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Authority</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+
+
+</div>
+<th:block layout:fragment="scripts">
+
+    <!-- Page-Level Scripts -->
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function() {
+            var table = $('#bank').DataTable({
+                select:false,
+                responsive: true,
+                "searching": false,
+                "paging": true,
+                "processing" : true});
+
+        });
+        /*]]>*/
+    </script>
+</th:block>
+
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Currency Management</h5>
+        </div>
+    </div>
+    <!-- /Title -->
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">currency details</h6>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <div class="form-wrap">
+                            <form class="form-horizontal" method="post" action="/app/currency/update"
+                                  th:object="${currencyDetail}">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Code :</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" disabled
+                                                       th:field="${currency.type}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Description :</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" disabled
+                                                       th:field="${currency.description}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="light-grey-hr">
+
+                                <input type="hidden" th:field="*{id}" class="form-control">
+                                <input type="hidden" th:field="*{currencyCode}" class="form-control">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Buying Rate :</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"
+                                                       th:field="*{buyingRate}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Selling Rate :</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"
+                                                       th:field="*{sellingRate}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Calculate Charge In Naira
+                                                :</label>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" id="enabled" name="enabled"
+                                                       class="js-switch js-switch-1 form-control"
+                                                       data-switchery="true" th:value="*{calculateChargeInNaira}"
+                                                       th:field="*{calculateChargeInNaira}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Transfer Fee Per Currency In
+                                                Naira :</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"
+                                                       th:field="*{transactionFeePerInternationalCurrencyInNaira}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Flat Charge
+                                                Rate :</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"
+                                                       th:field="*{flatChargeRate}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Percentage Charge
+                                                Rate :</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"
+                                                       th:field="*{percentageChargeRate}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Is Flat Charge Enabled ?</label>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox"
+                                                       class="js-switch js-switch-1 form-control"
+                                                       data-switchery="true" th:value="*{flatChargeEnabled}"
+                                                       th:field="*{flatChargeEnabled}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Service Charge Cap :</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"
+                                                       th:field="*{serviceChargeCap}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Amount Search Deviation For
+                                                Transaction Matching (+/-) :</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"
+                                                       th:field="*{amountSearchDeviation}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10 col-sm-4">Rate Search Deviation For
+                                                Transaction Matching (+/-) :</label>
+                                            <div class="col-sm-7">
+                                                <input type="text"
+                                                       th:field="*{rateSearchDeviation}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group mb-0">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-success btn-anim"><i
+                                                class="icon-rocket"></i><span class="btn-text">submit</span></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+</div>
+<th:block layout:fragment="scripts">
+</th:block>
+
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<table xmlns:th="http://www.w3.org/1999/xhtml">
+<div style="padding:10px;width: 700px">
+    <p>Dear <span th:text="${username}"></span></p><br />
+
+
+    Your Paaro wallet of currency type <span th:text="${currencyType}"></span> has been credited with <span th:text="${effectiveAmount}"></span>.
+
+    <p>
+        Available Balance : <h3 th:text="${availableBalance}"></h3>
+    </p>
+    <p>
+        Ledger Balance : <h3 th:text="${ledgerBalance}"></h3>
+    </p>
+
+    <p>Cheers.</p>
+
+    <p>Paaro Trade.</p>
+</div>
+</table>

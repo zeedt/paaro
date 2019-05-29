@@ -1,0 +1,58 @@
+<table xmlns:th="http://www.w3.org/1999/xhtml">
+    <div style="padding: 15px;width: 700px;">
+        <p>Dear <span th:text="${username}"></span></p><br />
+
+
+        Your transfer request from your Paaro wallet of currency type <span th:text="${currencyType}"></span> has been logged successfully. <br/>
+
+        Below is the transfer request details:
+
+        <table cellpadding="3" cellspacing="3" border="0" width="300px">
+
+            <tr>
+                <td align="left" valign="middle">Total amount </td><td align="left" valign="middle"><h3 th:text="${effectiveAmount}"></h3> </td>
+            </tr>
+
+            <tr>
+                <td align="left" valign="middle">Charge amount</td> <td align="left" valign="middle"><h3 th:text="${chargeAmount}"></h3></td>
+            </tr>
+
+            <tr>
+                <td align="left" valign="middle">Actual amount </td> <td align="left" valign="middle"><h3 th:text="${actualAmount}"></h3></td>
+            </tr>
+
+            <tr>
+                <td align="left" valign="middle">Exchange rate </td> <td align="left" valign="middle"><h3 th:text="${exchangeRate}"></h3></td>
+            </tr>
+
+            <tr>
+                <td align="left" valign="middle">Recipient </td> <td align="left" valign="middle"><h3 th:text="${accountName}"></h3></td>
+            </tr>
+
+            <tr>
+                <td align="left" valign="middle">Account Number </td> <td align="left" valign="middle"><h3 th:text="${accountNumber}"></h3></td>
+            </tr>
+
+            <tr>
+                <td align="left" valign="middle">Recipient currency</td> <td align="left" valign="middle"><h3 th:text="${recipientCurrency}"></h3></td>
+            </tr>
+
+            <tr>
+                <td align="left" valign="middle">Available balance </td> <td align="left" valign="middle"><h3 th:text="${availableBalance}"></h3></td>
+            </tr>
+
+            <tr>
+                <td align="left" valign="middle">Ledger balance</td> <td align="left" valign="middle"><h3 th:text="${ledgerBalance}"></h3></td>
+            </tr>
+            <tr>
+                <td align="left" valign="middle">Reference Number</td> <td align="left" valign="middle"><h3 th:text="${referenceNo}"></h3></td>
+            </tr>
+
+        </table>
+
+
+        <p>Cheers.</p>
+
+        <p>Paaro Trade.</p>
+    </div>
+</table>

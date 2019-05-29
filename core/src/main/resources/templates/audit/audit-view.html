@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.0/empty_page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Apr 2015 10:53:24 GMT -->
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Paaro | Exchange</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <script src="../js/jquery-2.1.1.js"></script>
+
+
+
+    <!-- Data Tables -->
+    <link href="../css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="../css/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
+    <link href="../css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet"/>
+    <link href="../css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+    <link href="../css/animate.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
+    <link href="../template-css/users.css" rel="stylesheet"/>
+
+</head>
+
+<body onclick="redirectToPage()">
+<script type='text/javascript'>
+    $.ajax({
+        type : "GET",
+        beforeSend: function(request) {
+            request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("paaro_access_token"));
+        },
+        async:false,
+        url : "/user/authority",
+        error : function (e) {
+            console.log("status code is " + e.status);
+            if (e.status == '401') {
+                console.log("status code is " + 401);
+                localStorage.clear();
+                window.countryCode.href = "/login";
+            }
+        }
+    })
+</script>
+<div class="loading-modal"><!-- Place at bottom of page --></div>
+<div id="wrapper">
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="profile-element"> <span>
+                            <img alt="image" class="img" src="img/corologo.png" width="150px" />
+                             </span>
+                    </div>
+                    <div class="logo-element">
+                        <span>
+                            <img alt="image" class="img" src="img/smalllogo.png" />
+                             </span>
+                    </div>
+                </li>
+                <!-- <li>
+                    <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> </a>
+                </li> -->
+
+                <li>
+                    <a href="/"><i class="fa fa-edit"></i><span class="nav-label">Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="/view/view-authorities"><i class="fa fa-edit"></i><span class="nav-label">Authority</span></a>
+                </li>
+                <li>
+                    <a href="/view/users"><i class="fa fa-edit"></i><span class="nav-label">View users</span></a>
+                </li>
+                <li>
+                    <a href="/view/setting-view"><i class="fa fa-edit"></i><span class="nav-label">General Settings</span></a>
+                </li>
+                <li>
+                    <a href="/view/currency"><i class="fa fa-edit"></i><span class="nav-label">Currency</span></a>
+                </li>
+                <li>
+                    <a href="/view/audit-log"><i class="fa fa-edit"></i><span class="nav-label">Audit Log</span></a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">Welcome to Paaro Trade Portal.</span>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages">
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="../img/a7.jpg" />
+                                    </a>
+                                    <div class="media-body">
+                                        <small class="pull-right">46h ago</small>
+                                        <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br/>
+                                        <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="../img/a4.jpg" />
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right text-navy">5h ago</small>
+                                        <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br/>
+                                        <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="../img/profile.jpg" />
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right">23h ago</small>
+                                        <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br/>
+                                        <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="mailbox.html">
+                                        <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="mailbox.html">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="profile.html">
+                                    <div>
+                                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                        <span class="pull-right text-muted small">12 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="grid_options.html">
+                                    <div>
+                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="notifications.html">
+                                        <strong>See All Alerts</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <button onclick="logoutUser()">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </button>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Audit Log`</h5>
+                            <div class="ibox-tools">
+                                <!--<button onclick="showAddCurrencyModal()" class="btn btn-primary btn-xs">Add new currency</button>-->
+                            </div>
+                        </div>
+                        <!-- COntent goes here-->
+
+                        <div class="ibox-content">
+                            <div th:text="${currentPage}" hidden="hidden" id="currentPage"></div>
+                            <div th:text="${totalNoOfPages}" hidden="hidden" id="totalNoOfPages"></div>
+                            <!-- COntent goes here-->
+
+                            <div class="row">
+
+                                <div class="col-md-2">
+                                    <input type = "date" class="form-control" th:value="${fromDate}" id="fromDate" name="fromDate" />
+                                </div>
+                                <div class="col-md-2">
+                                    <input type = "date" class="form-control" th:value="${toDate}" id="toDate" name="toDate" />
+                                </div>
+
+                                <div class="col-sm-6 pull-right">
+                                    <div id="imaginary_container">
+                                        <div class="input-group stylish-input-group">
+                                            <input type="text" class="form-control" th:value="${filterValue}"  placeholder="Filter with name...." id="audit-filter" />
+                                            <span class="input-group-addon">
+                        <button type="submit" onclick="filterAudit()" id="submit-user-search">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                                            <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-download" onclick="downloadLog()" id="download-log"></span>
+                    </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table>
+                                <div th:if="${auditLogs.size()==0}" style="padding-bottom: 10px;padding-left: 10px">No Log found</div>
+                                <div th:if="${auditLogs.size()>0}" style="padding-bottom: 10px;padding-left: 10px" > <h3> Record(s) found : <span th:text="${totalElements}"></span></h3></div>
+
+                                <div th:if="${auditLogs.size()>0}" class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+
+                                        <tr>
+                                            <th>Actor</th>
+                                            <th>Action</th>
+                                            <!--<th>Ip Address</th>-->
+                                            <!--<th>Initial Data</th>-->
+                                            <th>Final data</th>
+                                            <th>Affected module</th>
+                                            <th>Date</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr th:each="auditLog:${auditLogs}">
+                                            <td th:text="${auditLog.performedBy}" th:onclick="'javascript : showDetailsModal(\''+${auditLog.action}+'\', \''+${auditLog.ipAddress}+'\', \''+${auditLog.performedBy}+'\', \''+${auditLog.module}+'\', \''+${auditLog.datePerformed}+'\', \''+${auditLog.initialData}+'\', \''+${auditLog.finalData}+'\');'">
+
+                                            </td>
+                                            <td th:text="${auditLog.action}"></td>
+                                            <td th:text="${auditLog.ipAddress}"></td>
+                                            <!--<td th:text="${auditLog.initialData}"></td>-->
+                                            <!--<td th:text="${auditLog.finalData}"></td>-->
+                                            <td th:text="${auditLog.module}"></td>
+                                            <td th:text="${auditLog.datePerformed}"></td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </table>
+                            <div class="col-md-4 col-md-offset-4" style="font-size: 15px;">
+                                <a href="javascript: auditPreviousPage()">Prev</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript: auditNextPage()">Next</a>
+                            </div>
+                            <!--Content ends here-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="audit-view" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="overflow: scroll">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Audit View</h4>
+                    </div>
+                    <div class="modal-body" style="overflow: scroll">
+
+                        <!--Content will be passed here-->
+                        <table class="table table-striped">
+                            <tbody>
+
+                            <tr >
+                                <td> Module</td>
+                                <td id="module-name"></td>
+                            </tr>
+                            <tr >
+                                <td> Actor</td>
+                                <td id="actor-name"></td>
+                            </tr>
+                            <tr >
+                                <td> Action performed</td>
+                                <td id="action-performed"></td>
+                            </tr>
+                            <tr >
+                                <td> Ip Address</td>
+                                <td id="ip-address"></td>
+                            </tr>
+                            <tr >
+                                <td> Date performed</td>
+                                <td id="date-performed"></td>
+                            </tr>
+                            <tr >
+                                <td> Initial data</td>
+                                <td id="initial-data"></td>
+                            </tr>
+                            <tr >
+                                <td> Final data</td>
+                                <td id="final-data"></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="footer">
+        <div>
+            <strong>Copyright</strong> Paaro Exchange &copy; 2018
+        </div>
+    </div>
+
+</div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="../js/jquery-2.1.1.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootbox.min.js"></script>
+<script src="../js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Data Tables -->
+<script src="../js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="../js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="../js/plugins/dataTables/dataTables.responsive.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="../js/inspinia.js"></script>
+<script src="../js/plugins/pace/pace.min.js"></script>
+<script src="../template-js/audit.js"> </script>
+<script src="../template-js/underscore-min.js"> </script>
+<script>
+    $(document).ready(function() {
+        $("#audit-filter").focus();
+
+        var delay = (function(){
+            var timer = 0;
+            return function(callback, ms){
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        $('#audit-filter').keyup(function(event){
+            delay(function(){
+                $('#submit-user-search').click();
+            }, 500 );
+        });
+
+    });
+</script>
+</body>
+</html>

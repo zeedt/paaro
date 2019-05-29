@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Wallet and KYC Details</h5>
+        </div>
+    </div>
+    <!-- /Title -->
+
+    <div class="row">
+        <div class="col-sm-3 col-xs-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body text-center">
+                        <div class="profile-info">
+                            <div class="profile-img-wrap">
+                                <img width="200px" height="200px" class="mb-10" th:if="${kyc.passportPhotoData == null}"
+                                     th:src="@{~/img/user1.png}"
+                                     alt="First slide image">
+                                <img width="200px" height="200px" class="mb-10" th:if="${kyc.passportPhotoData != null}"
+                                     th:src="@{'data:image/png;base64, ' + ${kyc.passportPhotoData}}"
+                                     alt="First slide image">
+
+                            </div>
+                        </div>
+                        <span class="testi-pers-name block mt-15  txt-dark capitalize-font head-font">
+														Passport Status
+													</span>
+                        <span class="testi-pers-desg block capitalize-font" th:text="${kyc.passportPhotoKycStatus}">
+														Interaction Designer
+													</span>
+                        <div th:if="${kyc.passportPhotoUploaded == true}">
+                            <a th:href="@{/app/customer/{path}/{client}/download/passport(path=${kyc.id},client=${managedUser.id})}"
+                               class="btn btn-xs btn-primary">Download</a>
+                            <a th:href="@{/app/customer/{path}/{client}/verify/passport(path=${kyc.id},client=${managedUser.id})}"
+                               class="btn btn-xs btn-success">Verify</a><a
+                                th:href="@{/app/customer/{path}/{client}/decline/passport(path=${kyc.id},client=${managedUser.id})}"
+                                class="btn btn-xs btn-danger">Decline</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 col-xs-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body text-center">
+                        <div class="profile-info">
+                            <div class="profile-img-wrap">
+                                <img width="200px" height="200px" class="mb-10" th:if="${kyc.validIdData == null}"
+                                     th:src="@{~/img/user1.png}"
+                                     alt="First slide image">
+                                <img width="200px" height="200px" class="mb-10" th:if="${kyc.validIdData != null}"
+                                     th:src="@{'data:image/png;base64, ' + ${kyc.validIdData}}"
+                                     alt="First slide image">
+                            </div>
+                        </div>
+                        <span class="testi-pers-name block mt-15  txt-dark capitalize-font head-font">
+														Valid ID Status
+													</span>
+                        <span class="testi-pers-desg block capitalize-font" th:text="${kyc.validIdKycStatus}">
+														Interaction Designer
+													</span>
+                        <div th:if="${kyc.validIdUploaded == true}">
+                            <a th:href="@{/app/customer/{path}/{client}/download/valid-id(path=${kyc.id},client=${managedUser.id})}"
+                               class="btn btn-xs btn-primary">Download</a>
+                            <a th:href="@{/app/customer/{path}/{client}/verify/valid-id(path=${kyc.id},client=${managedUser.id})}"
+                               class="btn btn-xs btn-success">Verify</a><a
+                                th:href="@{/app/customer/{path}/{client}/decline/valid-id(path=${kyc.id},client=${managedUser.id})}"
+                                class="btn btn-xs btn-danger">Decline</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 col-xs-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body text-center">
+                        <div class="profile-info">
+                            <div class="profile-img-wrap">
+                                <img width="200px" height="200px" class="mb-10" th:if="${kyc.utilityBillData == null}"
+                                     th:src="@{~/img/user1.png}"
+                                     alt="First slide image">
+                                <img width="200px" height="200px" class="mb-10" th:if="${kyc.utilityBillData != null}"
+                                     th:src="@{'data:image/png;base64, ' + ${kyc.utilityBillData}}"
+                                     alt="First slide image">
+                            </div>
+                        </div>
+                        <span class="testi-pers-name block mt-15  txt-dark capitalize-font head-font">
+														Utility Bill Status
+													</span>
+                        <span class="testi-pers-desg block capitalize-font" th:text="${kyc.utilityBillKycStatus}">
+														Interaction Designer
+													</span>
+                        <div th:if="${kyc.utilityBillUploaded == true}">
+                            <a th:href="@{/app/customer/{path}/{client}/download/utility(path=${kyc.id},client=${managedUser.id})}"
+                               class="btn btn-xs btn-primary">Download</a>
+                            <a th:href="@{/app/customer/{path}/{client}/verify/utility(path=${kyc.id},client=${managedUser.id})}"
+                               class="btn btn-xs btn-success">Verify</a>
+                            <a th:href="@{/app/customer/{path}/{client}/decline/utility(path=${kyc.id},client=${managedUser.id})}"
+                               class="btn btn-xs btn-danger">Decline</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 col-xs-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body text-center">
+                        <!--<div class="profile-info">-->
+                        <!--<div class="profile-img-wrap">-->
+                        <!--<img width="200px" height="200px" class="mb-10" th:src="@{~/img/user1.png}" alt="First slide image">-->
+                        <!--<img width="200px" height="200px" class="mb-10" th:if="${kyc.passportPhotoData != null}"-->
+                        <!--th:src="@{'data:image/png;base64, ' + ${kyc.passportPhotoData}}"-->
+                        <!--alt="First slide image">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <span class="testi-pers-name block mt-15  txt-dark capitalize-font head-font">
+														BVN Status
+													</span>
+                        <span class="testi-pers-desg block capitalize-font" th:text="${kyc.bvnKycStatus}">
+														Interaction Designer
+													</span>
+                        <div th:if="${kyc.bvnOrIdentificationNumberUploaded == true}">
+                            <a th:href="@{/app/customer/{path}/{client}/verify/bvn(path=${kyc.id},client=${managedUser.id})}"
+                               class="btn btn-xs btn-success">Verify</a><a
+                                th:href="@{/app/customer/{path}/{client}/decline/bvn(path=${kyc.id},client=${managedUser.id})}"
+                                class="btn btn-xs btn-danger">Decline</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="row">-->
+        <!---->
+    <!--</div>-->
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">Wallet History</h6>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <div class="panel-group accordion-struct" id="accordion_1" role="tablist"
+                             aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading activestate" role="tab" id="heading_1">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion_1"
+                                       href="#collapse_1" aria-expanded="true">Funding</a>
+                                </div>
+                                <div id="collapse_1" class="panel-collapse collapse in" role="tabpanel">
+                                            <div class="panel-body pa-15">
+                                                <div class="panel-heading pa-10" style="cursor: pointer;" id="searchHeader">
+                                                    <span class="glyphicon glyphicon-search"></span><b> Funding Search</b>
+                                                </div>
+                                                <div class="" id="searchContent">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <div class="col-lg-6">
+                                                                <input type="text" class="form-control" id="paaroReferenceId" name="paaroReferenceId"
+                                                                       placeholder="Reference Number"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-daterange input-group col-lg-6" id="date-range">
+                                                                <input type="text" data-date-format="dd-mm-yyyy" class="form-control datepicker"
+                                                                       id="fromDate" name="fromDate" placeholder="Start date" required="required"/>
+                                                                <span class="input-group-addon no-border no-bd"
+                                                                      style="bacground:transparent !important">to</span>
+                                                                <input type="text" data-date-format="dd-mm-yyyy" class="form-control datepicker"
+                                                                       name="toDate" id="toDate" placeholder="End date" required="required"/>
+                                                                <!--<span id="emptyDateError"   class="error">Start and end date is mandatory</span>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12">
+
+                                                        <div class="form-group">
+                                                            <div class="col-lg-6">
+                                                                <select name="transactionStatus" id="transactionStatus" class="form-control">
+                                                                    <option value="">--Transaction status--</option>
+                                                                    <option th:each="entity: ${statuses}" th:value="${entity}"
+                                                                            th:text="${entity}"></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-lg-6">
+                                                                <select name="paymentMethod" id="paymentMethod" class="form-control">
+                                                                    <option value="">--Payment Method--</option>
+                                                                    <option th:each="entity: ${methods}" th:value="${entity}"
+                                                                            th:text="${entity}"></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <div class="col-lg-6">
+                                                                <select name="currency" id="currency" class="form-control">
+                                                                    <option value="">--Currency--</option>
+                                                                    <option th:each="entity: ${currencies}" th:value="${entity.type}"
+                                                                            th:text="${entity.description}"></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group input-group col-lg-12">
+
+
+                                                        <div class="col-lg-12">
+                                                            <button class="btn btn-success pull-right" id="search" type="button">Go!</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body pa-10">
+                                                <div class="panel-wrapper collapse in">
+                                                    <div class="panel-body table-responsive">
+                                                        <input type="hidden" id="pattern" th:value="${managedUser.id}">
+                                                        <table id="wallet" class="table table-responsive col-12">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Reference</th>
+                                                                <th>Actual Amount</th>
+                                                                <th>Date Initiated</th>
+                                                                <th>Third Party Ref.</th>
+                                                                <th>Payment Method</th>
+                                                                <th>Payment Message</th>
+                                                                <th>Transaction Status</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+
+
+                                                            </tbody>
+                                                            <tfoot>
+                                                            <tr>
+                                                                <th>Reference</th>
+                                                                <th>Actual Amount</th>
+                                                                <th>Date Initiated</th>
+                                                                <th>Third Party Ref.</th>
+                                                                <th>Payment Method</th>
+                                                                <th>Payment Message</th>
+                                                                <th>Transaction Status</th>
+                                                            </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="heading_2">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1"
+                                       href="#collapse_2" aria-expanded="false">Cash Out </a>
+                                </div>
+                                <div id="collapse_2" class="panel-collapse collapse" role="tabpanel">
+                                    <div class="panel-body pa-15">
+                                        <div class="panel-heading pa-10" style="cursor: pointer;" id="csearchHeader">
+                                            <span class="glyphicon glyphicon-search"></span><b>Cash Out Search</b>
+                                        </div>
+                                        <div class="" id="csearchContent">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="input-daterange input-group col-lg-6">
+                                                        <input type="text" data-date-format="dd-mm-yyyy" class="form-control datepicker"
+                                                               id="cfromDate" name="fromDate" placeholder="Start date" required="required"/>
+                                                        <span class="input-group-addon no-border no-bd"
+                                                              style="bacground:transparent !important">to</span>
+                                                        <input type="text" data-date-format="dd-mm-yyyy" class="form-control datepicker"
+                                                               name="toDate" id="ctoDate" placeholder="End date" required="required"/>
+                                                        <!--<span id="emptyDateError"   class="error">Start and end date is mandatory</span>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12">
+
+                                                <div class="form-group">
+                                                    <div class="col-lg-6">
+                                                        <select name="cashOutStatus" id="cashOutStatus" class="form-control">
+                                                            <option value="">--Cash Out status--</option>
+                                                            <option th:each="entity: ${statuses}" th:value="${entity}"
+                                                                    th:text="${entity}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-lg-6">
+                                                        <select name="currency" id="ccurrency" class="form-control">
+                                                            <option value="">--Currency--</option>
+                                                            <option th:each="entity: ${currencies}" th:value="${entity.type}"
+                                                                    th:text="${entity.description}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group input-group col-lg-12">
+
+
+                                                <div class="col-lg-12">
+                                                    <button class="btn btn-success pull-right" id="csearch" type="button">Go!</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body pa-10">
+                                        <div class="panel-wrapper collapse in">
+                                            <div class="panel-body table-responsive">
+                                                <input type="hidden" id="cpattern" th:value="${managedUser.email}">
+                                                <input type="hidden" id="cwallet" th:value="${wallet.id}">
+                                                <table id="cashout" class="table table-responsive col-12">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Actual Amount</th>
+                                                        <th>Date Initiated</th>
+                                                        <th>Third Party Ref.</th>
+                                                        <th>Payment Method</th>
+                                                        <th>Payment Message</th>
+                                                        <th>Transaction Status</th>
+                                                        <th>View</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <th>Actual Amount</th>
+                                                        <th>Date Initiated</th>
+                                                        <th>Third Party Ref.</th>
+                                                        <th>Payment Method</th>
+                                                        <th>Payment Message</th>
+                                                        <th>Transaction Status</th>
+                                                        <th>View</th>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="scripts">
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $('#searchContent').hide();
+            $('#searchById').hide();
+            var table = $('#wallet').DataTable({
+                select: false,
+                responsive: true,
+                "lengthMenu": [ [10, 20, 30, -1], [10, 20, 30, "All"] ],
+                "pagingType": "simple_numbers",
+                "searching": false,
+                "paging": true,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    url: "/app/customer/wallet/transactions",
+                    "type": "GET",
+                    "data": function (d) {
+                        d.csearch = $('#pattern').val();
+                        d.paaroReferenceId = $('#paaroReferenceId').val();
+                        d.currency = $('#currency').val();
+                        d.fromDate = $('#fromDate').val();
+                        d.toDate = $('#toDate').val();
+                        d.transactionStatus = $('#transactionStatus').val();
+                        d.paymentMethod = $('#paymentMethod').val();
+                    }
+                },
+                "dom": 'T<"clear">frtlp',
+                "rowId": "id",
+                "columns": [
+                    {"data": "paaroReferenceId"},
+                    {"data": "actualAmount"},
+                    {"data": "initiatedDate"},
+                    {"data": "thirdPartyReferenceId"},
+                    {"data": "paymentMethod"},
+                    {"data": "narration"},
+                    {"data": "transactionStatus"}
+                ],
+                "columnDefs": [{
+                    "targets": 1,
+                    data: 'actualAmount',
+                    render: $.fn.dataTable.render.number(',', '.', 2)
+                }, {
+                    "targets": 2,
+                    "data": "initiatedDate",
+                    "render": function (data, type, full, meta) {
+                        if (type === 'display') {
+                            if (data == null)
+                                return data;
+                            var dtStart = new Date(parseInt(data));
+                            var dtStartWrapper = moment(dtStart);
+                            return dtStartWrapper.format('LLLL');
+                        }
+                        return data;
+                    }
+                }]
+            });
+        });
+
+        $('#searchHeader').on("click", function () {
+            var display = $('#searchContent').css('display');
+            if (display != 'none') {
+                $('#searchContent').hide();
+            } else {
+                $('#searchContent').show();
+
+            }
+        });
+
+        $("#search").on("click", function (e) {
+            $('#searchContent').hide();
+            e.preventDefault();
+            dt = $('#wallet').DataTable();
+            dt.ajax.reload(null, true);
+        });
+
+        /*]]>*/
+    </script>
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $('#csearchContent').hide();
+            $('#csearchById').hide();
+            var table = $('#cashout').DataTable({
+                select: false,
+                responsive: true,
+                "lengthMenu": [ [10, 20, 30, -1], [10, 20, 30, "All"] ],
+                "pagingType": "simple_numbers",
+                "searching": false,
+                "paging": true,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    url: "/app/customer/wallet/cashout",
+                    "type": "GET",
+                    "data": function (d) {
+                        d.csearch = $('#cpattern').val();
+                        d.cwallet = $('#cwallet').val();
+                        d.currency = $('#ccurrency').val();
+                        d.fromDate = $('#cfromDate').val();
+                        d.toDate = $('#ctoDate').val();
+                        d.cashOutStatus = $('#cashOutStatus').val();
+                    }
+                },
+                "dom": 'T<"clear">frtlp',
+                "rowId": "id",
+                "columns": [
+                    {"data": "amount"},
+                    {"data": "requestDate"},
+                    {"data": "accountName"},
+                    {"data": "accountNumber"},
+                    {"data": "customerNarration"},
+                    {"data": "cashOutStatus"},
+                    {"data": "id"}
+                ],
+                "columnDefs": [{
+                    "targets": 0,
+                    data: 'amount',
+                    render: $.fn.dataTable.render.number(',', '.', 2)
+                }, {
+                    "targets": 1,
+                    "data": "requestDate",
+                    "render": function (data, type, full, meta) {
+                        if (type === 'display') {
+                            if (data == null)
+                                return data;
+                            var dtStart = new Date(parseInt(data));
+                            var dtStartWrapper = moment(dtStart);
+                            return dtStartWrapper.format('LLLL');
+                        }
+                        return data;
+                    }
+                }, {
+                    "targets": 6,
+                    "data": "id",
+                    "render": function (data, type, full, meta) {
+                        if (type === 'display') {
+                            return "<a href='/app/cashout/" + data + "/detail' class='mr-25' data-toggle='tooltip' data-original-title='View Details'> <i class='fa fa-eye text-inverse m-r-10'></i> </a>";
+                        }
+                        return data;
+                    }
+                }]
+            });
+        });
+
+        $('#csearchHeader').on("click", function () {
+            var display = $('#csearchContent').css('display');
+            if (display != 'none') {
+                $('#csearchContent').hide();
+            } else {
+                $('#csearchContent').show();
+
+            }
+        });
+
+        $("#csearch").on("click", function (e) {
+            $('#csearchContent').hide();
+            e.preventDefault();
+            dt = $('#cashout').DataTable();
+            dt.ajax.reload(null, true);
+        });
+
+        /*]]>*/
+    </script>
+
+</th:block>
+
+</body>
+</html>

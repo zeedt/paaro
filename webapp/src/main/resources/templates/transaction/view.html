@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h5 class="txt-dark">Transaction Management</h5>
+        </div>
+    </div>
+    <!-- /Title -->
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <form method="post" id="downloadForm" action="/app/transaction/download">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading" style="cursor: pointer;" id="searchHeader">
+                    <span class="glyphicon glyphicon-search"></span><b>Search</b>
+                </div>
+                <div class="panel-body" id="searchContent">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" id="paaroReferenceId" name="paaroReferenceId"
+                                       placeholder="Reference Number"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" id="accountNumber" name="accountNumber"
+                                       placeholder="Recipient Account Number"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-daterange col-lg-4">
+                                <input type="text" data-date-format="dd-mm-yyyy" class="form-control datepicker"
+                                       id="fromDate" name="fromDate" placeholder="Start date" required="required"/>
+                                <span class="input-group-addon no-border no-bd"
+                                      style="bacground:transparent !important">to</span>
+                                <input type="text" data-date-format="dd-mm-yyyy" class="form-control datepicker"
+                                       name="toDate" id="toDate" placeholder="End date" required="required"/>
+                                <!--<span id="emptyDateError"   class="error">Start and end date is mandatory</span>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+
+
+                        <div class="form-group">
+                            <div class="col-lg-4">
+                                <select name="fromCurrency" id="fromCurrency" class="form-control">
+                                    <option value="">--From Currency--</option>
+                                    <option th:each="entity: ${currencies}" th:value="${entity.type}" th:text="${entity.description}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-4">
+                                <select name="toCurrency" id="toCurrency" class="form-control">
+                                    <option value="">--To Currency--</option>
+                                    <option th:each="entity: ${currencies}" th:value="${entity.type}" th:text="${entity.description}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-4">
+                                <input type="text" name="email" class="form-control" id="email" placeholder="Customer Email"/>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-12">
+
+                        <div class="form-group">
+                            <div class="col-lg-4">
+                                <select name="transactionStatus" id="transactionStatus" class="form-control">
+                                    <option value="">--Transaction status--</option>
+                                    <option th:each="entity: ${statuses}" th:value="${entity}" th:text="${entity}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-4">
+                                <select name="settled" id="isSettled" class="form-control">
+                                    <option value="">--true/false--</option>
+                                    <option value="true">true</option>
+                                    <option value="false">false</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group input-group col-lg-12">
+
+
+                        <div class="col-lg-12">
+                            <button class="btn btn-success pull-right" id="downloadBtn" type="submit">Download Excel</button>
+
+                            <button class="btn btn-success pull-right mr-5" id="search" type="button">Go!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">all bids</h6>
+                    </div>
+                    <div class="pull-right">
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table id="admin" class="table table-hover display  pb-30">
+                                    <thead>
+                                    <tr>
+                                        <th>Reference</th>
+                                        <th>Customer</th>
+                                        <th>Actual Amount</th>
+                                        <th>User Rate</th>
+                                        <th>From Currency</th>
+                                        <th>Transaction Status</th>
+                                        <th>Date</th>
+                                        <th>Mapped</th>
+                                        <th>Settlement</th>
+                                        <th>Action(s)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Reference</th>
+                                        <th>Customer</th>
+                                        <th>Actual Amount</th>
+                                        <th>User Rate</th>
+                                        <th>From Currency</th>
+                                        <th>Transaction Status</th>
+                                        <th>Date</th>
+                                        <th>Mapped</th>
+                                        <th>Settlement</th>
+                                        <th>Action(s)</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+
+</div>
+<th:block layout:fragment="scripts">
+
+    <!-- Page-Level Scripts -->
+    <script>
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $('#searchContent').hide();
+            $('#searchById').hide();
+            var table = $('#admin').DataTable({
+                select: false,
+                responsive: true,
+                "lengthMenu": [ [10, 20, 30, -1], [10, 20, 30, "All"] ],
+                "pagingType": "simple_numbers",
+                "searching": false,
+                "paging": true,
+                "processing": true,
+                "sort":false,
+                "serverSide": true,
+                "ajax" : {
+                    url : "/app/transaction/search",
+                    "type" : "GET",
+                    "data" : function(d) {
+                        d.paaroReferenceId = $('#paaroReferenceId').val();
+                        d.fromCurrency = $('#fromCurrency').val();
+                        d.toCurrency = $('#toCurrency').val();
+                        d.fromDate = $('#fromDate').val();
+                        d.toDate = $('#toDate').val();
+                        d.transactionStatus = $('#transactionStatus').val();
+                        d.accountNumber = $('#accountNumber').val();
+                        d.isSettled = $('#isSettled').val();
+                        d.email = $('#email').val();
+                    }
+                },
+                "dom": 'T<"clear">frtlp',
+                "rowId": "id",
+                "columns": [
+                    {"data": "paaroReferenceId"},
+                    {"data": "managedUser.email"},
+                    {"data": "actualAmount"},
+                    {"data": "exchangeRate"},
+                    {"data": "fromCurrency.type"},
+                    {"data": "transactionStatus"},
+                    {"data": "initiatedDate"},
+                    {"data": "transferRequestMap"},
+                    {"data": "settled"},
+                    {"data": "id"}
+                ],
+                "columnDefs": [{
+                    "targets" : 2,
+                    data: 'price',
+                    render: $.fn.dataTable.render.number( ',', '.', 2)
+                },{
+                    "targets" : 3,
+                    data: 'exchangeRate',
+                    render: $.fn.dataTable.render.number( ',', '.', 2)
+                },{
+                    "targets" : 6,
+                    "data" : "initiatedDate",
+                    "render" : function(data, type,full, meta) {
+                        if (type === 'display') {
+                            if(data == null)
+                                return data;
+                            var dtStart = new Date(parseInt(data));
+                            var dtStartWrapper = moment(dtStart);
+                            return dtStartWrapper.format('LLLL');
+                        }
+                        return data;
+                    }
+                },{
+                    "targets": 7,
+                    "data": "transferRequestMap",
+                    "render": function (data, type, full, meta) {
+                        if (type === 'display') {
+                            if (full.transferRequestMap == null) {
+                                return "<span class='label label-danger'>unmapped</span>";
+                            } else {
+                                var currency = full.fromCurrency.type;
+                                if (currency === "NGN") {
+                                    return "<a href='/app/transaction/" + full.transferRequestMap.otherCurrencyHolderTransaction.id + "/detail' data-toggle='tooltip' data-original-title='View Details'><span class='label label-success'>View Matching Bid </span></a>";
+                                }else {
+                                    return "<a href='/app/transaction/" +full.transferRequestMap.nairaHolderTransaction.id + "/detail' data-toggle='tooltip' data-original-title='View Details'><span class='label label-success'>View Matching Bid </span></a>";
+                                }
+                            }
+                        }
+                        return data;
+                    }
+                },{
+                    "targets": 8,
+                    "data": "settled",
+                    "render": function (data, type, full, meta) {
+                        if (type === 'display') {
+                            if (data == true) {
+                                return "<span class='label label-success'>settled</span>";
+                            } else {
+                                return "<span class='label label-danger'>not settled</span>";
+                            }
+                        }
+                        return data;
+                    }
+                },
+                    {
+                        "targets": 9,
+                        "data": "id",
+                        "render": function (data, type, full, meta) {
+                            if (type === 'display') {
+                                return "<a href='/app/transaction/" + data + "/detail' class='mr-25' data-toggle='tooltip' data-original-title='View Details'> <i class='fa fa-eye text-inverse m-r-10'></i> </a>";
+                            }
+                            return data;
+                        }
+                    }
+                ]
+            });
+        });
+
+        $('#searchHeader').on("click",function () {
+            var display = $('#searchContent').css('display');
+            if(display != 'none'){
+                $('#searchContent').hide();
+            }else {
+                $('#searchContent').show();
+
+            }
+        });
+
+        $("#search").on("click", function(e)
+        {
+            $('#searchContent').hide();
+            e.preventDefault();
+            dt = $('#admin').DataTable();
+            dt.ajax.reload(null, true);
+        });
+
+        $("#downloadBtn").on("click", function(e)
+        {
+            document.getElementById("downloadForm").submit();
+        });
+
+        /*]]>*/
+    </script>
+</th:block>
+
+
+</body>
+</html>
